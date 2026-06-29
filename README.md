@@ -2,7 +2,7 @@
 
 > Claude Code generator for **VS Code extensions** - TypeScript · esbuild · native VS Code theming.
 
-Part of a family of Claude Code generators. See also the Electron, Flutter, and Python generators.
+Part of a family of Claude Code generators. See also [electron-app-generator](https://github.com/TiercelinQ/electron-app-generator), [flutter-app-generator](https://github.com/TiercelinQ/flutter-app-generator), and [python-app-generator](https://github.com/TiercelinQ/python-app-generator).
 
 Unified edition: the full generation pipeline **plus** post-delivery maintenance skills, an explicit role per skill, persisted specs, centralized executable verification, and native memory.
 
@@ -141,6 +141,17 @@ my-extension/
 - `.claude/rules/` - domain rules:
   - `architecture.md` · `manifest.md` · `webview.md` · `state.md` · `errors.md` · `security.md` · `i18n.md` · `config.md` · `tests.md` · `sf-cli.md`
   - `verification.md` - single source of truth for executable + static checks
+
+---
+
+## Generator family
+
+| Generator | Stack | Target |
+| --------- | ----- | ------ |
+| [claude-python-app-generator](https://github.com/TiercelinQ/claude-python-app-generator) | Python · PyQt6 · QSS | Windows desktop |
+| [electron-app-generator](https://github.com/TiercelinQ/electron-app-generator) | Node.js · Electron · React · TS | Windows desktop |
+| [flutter-app-generator](https://github.com/TiercelinQ/flutter-app-generator) | Flutter · Dart · Riverpod | Android |
+| [vscode-ext-generator](https://github.com/TiercelinQ/vscode-ext-generator) | TypeScript · esbuild · native theming | VS Code extension |
 
 ---
 
