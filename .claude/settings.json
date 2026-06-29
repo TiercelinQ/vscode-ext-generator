@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(tsc --noEmit)",
+      "Bash(eslint .)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Write(**/secrets/**)",
+      "Write(**/node_modules/**)",
+      "Write(**/dist/**)",
+      "Write(**/out/**)",
+      "Write(**/*.vsix)"
+    ]
+  }
+}
