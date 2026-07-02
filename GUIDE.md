@@ -136,6 +136,8 @@ Fichiers écrits directement sur le disque. Annonce `Lot N/[total] — [contenu]
 /vscode-app → 2    # reprendre : fournir le chemin du fichier SESSION
 ```
 
+La reprise est gérée par `/vscode-app` (option 2, ou un bloc SESSION collé directement dans le message — reprise directe sans menu) : lecture complète du fichier SESSION, réponse `Resuming [APP_NAME] — [phase suivante] | Batch [X/total] | Open points: …`, puis enchaînement immédiat sans re-poser les questions résolues.
+
 ---
 
 ## Travailler sur un projet livré
@@ -146,6 +148,8 @@ Fichiers écrits directement sur le disque. Annonce `Lot N/[total] — [contenu]
 
 Claude lit `docs/specs/04-architect.md` (priorité), sinon le README, sinon le code, puis applique toutes les règles. Projet sans README : `/vscode-generate-readme`.
 
+La prise en charge est confirmée en un bloc au format unifié : `Project loaded: [APP_NAME] v[VERSION]`, stack (VS Code extension · TypeScript · esbuild), contributions (commandes/vues), entités détectées, webview (hub / onglet par feature / aucune), tests, Salesforce CLI, specs — puis `Generator rules applied. Ready for: development · fixes · improvements · adjustments.`
+
 ### Maintenance (`/vscode-app → 4`)
 
 | Besoin                          | Commande      |
@@ -155,6 +159,8 @@ Claude lit `docs/specs/04-architect.md` (priorité), sinon le README, sinon le c
 | Corriger un bug                 | `/vscode-fix-issue`         |
 | Restructurer (sous validation)  | `/vscode-refactor-code`    |
 | Vérifier le build / lancer les checks | `/vscode-run-tests`  |
+
+`/vscode-add-feature` suit un protocole à diff contractuel : cadrage léger (4 questions), diff du contrat (fichiers créés/modifiés, points de contribution — ids `src/constants.ts`, manifeste `package.json`, activationEvents —, tests), **validation explicite avant écriture**, livraison en un lot unique (`Feature [name] — [N files]`), puis mise à jour de `docs/specs/04-architect.md`.
 
 ---
 

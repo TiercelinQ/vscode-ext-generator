@@ -32,6 +32,21 @@ Based on `docs/specs/02-featuring.md`, propose how each v1.0 feature surfaces:
 2. Justify each mapping against the feature (prefer native over webview).
 3. Describe the navigation: which activity-bar view container, which views in it, which commands appear where (view title, item context menu, palette), which status bar items, which keybindings (each with a `when`).
 
+Produce (in the user's language):
+
+## Proposed surfaces — [APP_NAME]
+
+**Surface mapping**
+| Feature | Contribution point | Where it appears |
+| ------- | ------------------ | ---------------- |
+| …       | …                  | …                |
+
+**Navigation**
+[view container(s) and views · command placement (palette / view title / item context) · status bar items · keybindings (each with a `when`)]
+
+**Webviews (if any)**
+- [per webview: `viewType` id · type (panel/view) · purpose · layout skeleton — hosting model if ≥ 2 webview features]
+
 ## 2. Customization — questions via `AskUserQuestion`
 
 For each closed question, mark the recommended option `(recommended)`, chosen from the validated feature context. Ask only the questions the features actually raise (skip the rest):

@@ -26,4 +26,6 @@ Phase: [name] | Batch: [X/total] | Next: [expected action]
 Locked decisions: [list]
 Open points: [list or "none"]
 
+If no project is active: "No active project. Type /vscode-app to start."
+
 Do not append the `/vscode-save-session` · `/vscode-show-state` · `/vscode-show-contract` reminder after this reply.

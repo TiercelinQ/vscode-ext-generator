@@ -20,7 +20,7 @@ A structured prompt system that generates complete, marketplace-ready VS Code ex
 
 Each phase writes a spec in the user's language to `docs/specs/` (`01-scoping` … `04-architect`); the contract is the source of truth.
 
-**Maintenance commands**: `/vscode-add-feature`, `/vscode-trace-feature`, `/vscode-fix-issue`, `/vscode-refactor-code`, `/vscode-run-tests`. Plus `/vscode-load-project` and `/vscode-generate-readme` to load/document existing extensions.
+**Maintenance commands**: `/vscode-add-feature` (add a feature, contract-compliant — explicit contract-diff validation before writing), `/vscode-trace-feature` (trace behavior), `/vscode-fix-issue` (root-cause debugging with a decision tree), `/vscode-refactor-code` (validated, behavior-preserving), `/vscode-run-tests` (executable verification). Plus `/vscode-load-project` (unified take-over confirmation) and `/vscode-generate-readme` to load/document existing extensions. Session resume is handled by `/vscode-app` (option 2 or a pasted SESSION block).
 
 Every generated extension follows the same MVC architecture, native VS Code theming, and security rules (webview CSP + nonce, validated input, secrets in `SecretStorage`).
 

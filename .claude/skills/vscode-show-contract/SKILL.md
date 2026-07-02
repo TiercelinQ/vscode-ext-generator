@@ -20,7 +20,7 @@ The contract on screen (in the user's language).
 
 ---
 
-Read `docs/specs/04-architect.md` (the locked source of truth) and display the complete validated tree with the role of each file, followed by the contribution points table (commands / views / settings / keybindings) and the state map.
+Read `docs/specs/04-architect.md` (the locked source of truth) and display the complete validated tree with the role of each file, followed by the contribution ids table and (if tests) the source→test mapping.
 
 If `docs/specs/04-architect.md` does not exist and no contract has been validated in session yet: `No validated contract — Phase 4 not reached.`
 

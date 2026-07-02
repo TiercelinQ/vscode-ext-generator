@@ -27,7 +27,7 @@ Map the chosen option to the routing below; a pasted SESSION block still trigger
 
 **1 — New extension**: start `/vscode-p1-scoping`, which handles the project folder name, location, and creation (the project root is established there).
 
-**2 — Resume**: ask for the SESSION file path (`docs/sessions/SESSION_AppName_SN.md`), read it fully. The project root is the folder containing `docs/` (two levels up from the SESSION file); confirm it. Then apply the resume protocol:
+**2 — Resume**: ask for the SESSION file path (`docs/sessions/SESSION_AppName_SN.md`), read it fully (native `Read` tool, never `cat` — Windows-compatible). The project root is the folder containing `docs/` (two levels up from the SESSION file); confirm it. Then apply the resume protocol:
 
 1. Read the SESSION block fully.
 2. Reply: `Resuming [APP_NAME] — [next phase] | Batch [X/total] | Open points: [list or "none"]`

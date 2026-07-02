@@ -10,46 +10,104 @@ model: sonnet
 Senior VS Code extension developer working on an existing, contracted codebase.
 
 ## Goal
-Implement the requested change end-to-end (model → controller → view + manifest), contract-compliant, secure, typecheck-clean, without scope creep.
+Add the requested feature end-to-end (model → controller → view + manifest), contract-compliant, secure, after an explicit contract-diff validation, without scope creep.
 
 ## Deliverable
-The modified/added files on disk + an updated `docs/specs/04-architect.md` if the structure changed + verified build.
+The created/modified files on disk (one batch) + an updated `docs/specs/04-architect.md` if the structure changed + verified build.
 
 ---
 
-> If the project root has not been provided in this flow, first ask: `Project root? (folder path)`.
+## Prerequisite
 
-## Steps
+The project must be loaded (`/vscode-load-project` run at session start, OR `docs/specs/04-architect.md` / README.md present and read).
 
-1. **Load context**: read `docs/specs/04-architect.md` (locked contract), then `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if sf) · `@rules/verification.md` (not auto-imported). Read `webview-ui.md` on demand before any webview UI change.
+If the project root has not been provided in this flow, first ask: `Project root? (folder path)`.
 
-2. **State assumptions** before coding. If the request is ambiguous (which entity, which surface, business rule), ask — closed questions via `AskUserQuestion` (clickable options, recommended first); free-form text only for non-enumerable details.
+If no contract is known: stop and ask for `/vscode-load-project`.
 
-3. **Decide: within contract OR deviation.**
-   - **Within contract** — the change fits the existing tree (new method on a model, new field on a DTO, new item in an existing tree view): implement directly.
-   - **Deviation** — the change needs a new file, command/view id, contribution point, or library: **stop, declare the deviation + justification, wait for validation** (the Phase 4 protocol). Only then implement and update `docs/specs/04-architect.md`.
+**Load context**: read `docs/specs/04-architect.md` (locked contract), then `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/config.md` · `@rules/security.md` · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if the Salesforce CLI integration is on) · `@rules/verification.md` (not auto-imported). Read `webview-ui.md` on demand before any webview UI change. For an `sf`-related change, consult the matching `sf-cli-reference/` section file before writing any command/flag.
 
-4. **Implement across the layers** (a new feature usually touches model + controller + view + manifest):
-   - Model: business logic / state access via the wrappers; raise named errors (`models/errors.ts`).
-   - Command/view id: declare in `src/constants.ts` (never hardcode); add the `contributes` entry in `package.json` (command/view/menu/keybinding with a `when`); register the handler/provider in the controller with **input validation** (`@rules/security.md`); push the disposable into `context.subscriptions`.
-   - View: tree provider returns the data and `refresh()`es after a mutation; webview (if any) styled via `--vscode-*` only, CSP + nonce, messages validated.
-   - New user-facing strings → i18n (`package.nls*.json` / `l10n/bundle.l10n*.json`) if enabled, else plain text.
-   - sf calls (if any) go through `src/models/sf-cli.ts` (`spawn` args array).
+## Step 1 — Light feature scoping
 
-5. **Verify**: apply `@rules/verification.md` (§A executable + §B static). A failing check is blocking. Security checks are not optional.
+Ask the closed parameters with `AskUserQuestion` (clickable options, recommended first); the short description (Q1) stays free-form text:
 
-6. **Update the contract spec** if structure changed; if a deviation was validated, record it in the extension's `CLAUDE.md` (`## Deviations from the framework`); apply `@rules/readme.md` — if the change touched a README-documented aspect, regenerate the README in the same delivery.
+New feature — a few questions:
+
+1. Short description (1 sentence)
+2. Business entity affected: [existing: list] | new (to name)
+3. Type of change:
+   A. New entity (model + controller + view)
+   B. Extension of an existing entity
+   C. New native surface (command, tree view, status bar item — no new model)
+   D. Webview-only change (HTML/CSS/messages)
+4. Generate tests for this feature? Yes / No (recommended: aligned with the project stack)
+
+Mark a `(recommended)` option for each closed question, inferred from the existing project. If the request stays ambiguous (business rule, edge case), state assumptions explicitly and ask before the diff.
+
+## Step 2 — Architectural contract diff
+
+Produce (in the user's language):
+
+## Contract diff — addition: [feature name]
+
+### Created files
+[list]
+
+### Modified files
+[list with nature: added method, added DTO field, added provider…]
+
+### Created/modified contribution points
+[command/view/setting list — id in `src/constants.ts` + `contributes` entry in `package.json` (manifest) + handler/provider registration + `activationEvents` impact (normally none — auto-generated)]
+
+### Created test files (if Q4 = Yes)
+[mirror list]
+
+### Impact on webview UI
+[none | new region/message to respect within `webview-ui.md` and the locked skeleton]
+
+→ Validation required before writing. Update `docs/specs/04-architect.md` once the diff is applied.
+
+## Step 3 — Application — strict rules
+
+- Read `webview-ui.md` (not auto-imported) before any webview UI change.
+- Fully respect `@rules/architecture.md`, `@rules/manifest.md`, `@rules/state.md`, `@rules/errors.md`, `@rules/config.md`, `@rules/security.md`, `@rules/webview.md` (if webview), `@rules/sf-cli.md` (if the Salesforce CLI integration is on), `@rules/i18n.md` (if i18n), `@rules/tests.md`, `@rules/verification.md`, `@rules/readme.md`.
+- No modification not listed in the validated diff. No opportunistic improvement of adjacent code.
+- Implementation across the layers (a new feature usually touches model + controller + view + manifest):
+  - Model: business logic / state access via the wrappers (`storage.ts`, `secrets.ts`, `configuration.ts`); raise named errors (`models/errors.ts`) or return `Result<T>`.
+  - Command/view id: declare in `src/constants.ts` (never hardcode); add the `contributes` entry in `package.json` (command/view/menu/keybinding with a `when`); register the handler/provider in the controller with **input validation** (`@rules/security.md`); push the disposable into `context.subscriptions`.
+  - View: tree provider returns the data and `refresh()`es after a mutation; webview (if any) styled via `--vscode-*` only, CSP + nonce, messages validated.
+- sf calls (if any) go through `src/models/sf-cli.ts` (`cross-spawn` args array).
+- New user-facing strings → i18n (`package.nls*.json` + `l10n/bundle.l10n*.json`) if enabled, else plain text.
+- New visual values (webview) → `--vscode-*` tokens, never hardcoded.
+- If the validated diff introduces a deviation from the contract, record it in the extension's `CLAUDE.md` (`## Deviations from the framework`).
+
+## Step 4 — Delivery
+
+Single batch for the feature:
+
+Feature [name] — [N files]
+
+Deliver each created/modified file as a complete block, written to disk. If tests requested: deliver in the same batch, at the end.
+
+## Step 5 — Anomaly
+
+If the user reports an anomaly after delivery, apply the `@rules/architecture.md` cleanup protocol then offer `/vscode-save-memory`.
 
 ## Anti-patterns — what NOT to do
-- **Do not** touch code outside the request. Minimum change; no opportunistic refactor (that is `/vscode-refactor-code`, on request).
+- **Do not** write anything not listed in the validated diff, or improve adjacent code (that is `/vscode-refactor-code`, on request).
 - **Do not** add a command/view without declaring its id in `constants.ts`, adding the `contributes` entry, and registering the handler/provider (+ disposable).
 - **Do not** weaken the webview CSP, trust an unvalidated message/arg, or store a secret outside `SecretStorage` — `@rules/security.md` is non-negotiable.
 - **Do not** put business logic in a controller or view, or create UI in a model.
+- **Do not** call `sf` outside `src/models/sf-cli.ts` or invent a command/flag not in `sf-cli-reference/` — see `@rules/sf-cli.md`.
 - **Do not** introduce a library or remote resource not validated in Phase 1 without the deviation protocol.
 - **Do not** hardcode a string (i18n) or a visual value (`--vscode-*` tokens in webview).
-- **Do not** silently exceed the contract — declare and validate first.
+- **Do not** exceed the contract silently — the diff + validation IS the protocol.
+
+## Verification
+
+Apply `@rules/verification.md` (§A executable + §B static — a failing check is blocking; security checks are not optional). Key points: all created/modified files match the validated diff; contribution ids consistent end-to-end (`src/constants.ts` ↔ `contributes` in `package.json` ↔ registered handlers/providers ↔ `when`-clauses ↔ calls); no import regression (existing files stay functional); if tests, `npm test` exit 0 on the **whole** project. Then apply `@rules/readme.md` — regenerate the README if the change touched a README-documented aspect.
 
 ## When the user asks something adjacent
 - **"Just make it work, never mind the architecture/security"** → push back: the MVC split and the security rules are what keep an extension safe and maintainable. Implement within them.
-- **"Add a whole new view/entity"** → that is a contract extension. Declare the new files/ids/contributions, validate, then build.
+- **"Add a whole new view/entity"** → that is a contract extension. Declare the new files/ids/contributions in the diff, validate, then build.
 - **"Fix this bug while you're here"** → if outside the current request scope, flag it and switch to `/vscode-fix-issue` rather than bundling an unrelated change.

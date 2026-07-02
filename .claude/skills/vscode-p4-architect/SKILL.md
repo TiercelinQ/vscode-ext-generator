@@ -21,16 +21,16 @@ Produce a complete, unambiguous architectural contract that freezes the file tre
 
 At start: read `@rules/architecture.md` (tree, batches, layer conventions), `@rules/manifest.md` (contributes, activation), `@rules/state.md`. If a webview is in scope, read `webview-ui.md` + `@rules/webview.md`. If the Salesforce integration is on, read `@rules/sf-cli.md`. Read `docs/specs/01-scoping.md` through `03-designing.md` for the validated decisions.
 
-Present (in the user's language):
+Present (in the user's language, as plain Markdown — never inside a code block):
 
 1. **Complete project tree** (model: `@rules/architecture.md`) with the role of each file.
-2. **Contribution points table** (ids centralized in `src/constants.ts`):
+2. **Contribution ids table** (ids centralized in `src/constants.ts` — the manifest, handlers, and consumers all read them):
 
-| Id | Kind | Handler / Provider | Model | Surface (where it appears) |
-| -- | ---- | ------------------ | ----- | -------------------------- |
-| `myext.entity.refresh` | command | `entity.controller.ts` | `EntityModel.list()` | view title `myext.entityView` |
-| `myext.entity.delete` | command | `entity.controller.ts` | `EntityModel.delete(id)` | item context menu |
-| `myext.entityView` | view (tree) | `entity-tree.ts` | `EntityModel` | container `myext-container` |
+| Contribution | `constants.ts` id | Manifest (`contributes`) | Handler / Provider | Consumer (where it appears) |
+| ------------ | ----------------- | ------------------------ | ------------------ | --------------------------- |
+| `myext.entity.refresh` | `CMD.ENTITY_REFRESH` | `commands` + `menus.view/title` | `entity.controller.ts` → `EntityModel.list()` | view title `myext.entityView` |
+| `myext.entity.delete` | `CMD.ENTITY_DELETE` | `commands` + `menus.view/item/context` | `entity.controller.ts` → `EntityModel.delete(id)` | item context menu |
+| `myext.entityView` | `VIEW.ENTITY` | `views` (container `myext-container`) | `entity-tree.ts` (TreeDataProvider) | activity-bar container |
 
 3. **Manifest map** — the `contributes` blocks to write (`commands`, `viewsContainers`, `views`, `menus`, `configuration`, `keybindings`) + the `activationEvents` (empty/auto unless a declared event is needed).
 4. **State map** — `globalState`/`workspaceState` keys, `SecretStorage` keys, `configuration` settings (key · type · default · scope). All keys in `constants.ts`.
@@ -45,6 +45,8 @@ Any deviation (merge, split, rename, addition, removal of a file, command/view i
 1. Stop.
 2. Declare the deviation + justification.
 3. Validation before resuming.
+
+**Blocking rule**: do not deliver Batch 1 until validation is explicit.
 
 ## Write the spec
 

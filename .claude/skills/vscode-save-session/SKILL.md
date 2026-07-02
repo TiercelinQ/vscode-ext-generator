@@ -20,9 +20,11 @@ Persist enough state to resume the project exactly where it stopped.
 
 ---
 
-1. Create the `docs/sessions/` folder at the project root if it does not exist.
-2. Determine N = next session number (existing files + 1).
-3. Write `docs/sessions/SESSION_[app_name]_S[N].md` (in the user's language):
+Use the native Claude Code tools (Windows-compatible):
+
+1. **Create** the `docs/sessions/` folder at the project root if it does not exist.
+2. Determine `[N]`: list `docs/sessions/SESSION_*_S*.md` via `Glob`, extract the integers (`S(\d+)\.md$`), `[N] = max + 1` (or `1` if none). `[app_name]` = exact extension `name` from `package.json` (no spaces; the Phase 2 name if the manifest is not delivered yet).
+3. **Write** `docs/sessions/SESSION_[app_name]_S[N].md` via `Write`:
 
 # SESSION_S[N] — [APP_NAME] · [completed phase]
 
@@ -35,9 +37,10 @@ Next batch: [X+1/total] (if Phase 5)
 ## Locked decisions
 
 - Target: VS Code extension · Stack: TypeScript strict + esbuild
-- Engine floor: [engines.vscode] · i18n: [Yes/No] · Tests: [Yes/No]
-- Webview: [Yes/No] · Salesforce CLI: [Yes/No] · Icon: [provided/default]
-- Calibration: [Small 3 batches / Medium-Large 4 batches]
+- Engine floor: [engines.vscode] · Tests: [Yes/No] · i18n: [Yes/No]
+- Icon: [provided/default] · Salesforce CLI: [Yes/No]
+- Webview: [Yes/No] [· hosting model: hub | one tab per feature — if ≥ 2 webview features]
+- Calibration: [Small 3 batches / Medium-Large 4 batches] (+1 test batch if tests enabled)
 - Selected features: [list]
 - Out of scope: [list]
 - Chosen surfaces: [commands/views/status bar/webview summary]
@@ -52,8 +55,7 @@ Reference: docs/specs/01-scoping.md · 02-featuring.md · 03-designing.md · 04-
 
 - [x] Batch 1/[total] — [content]
 - [ ] Batch 2/[total] — [content]
-- [ ] Batch 3/[total] — [content]
-- [ ] Batch 4/[total] — [content] ← include only if Medium/Large (4 batches)
+- ...
 
 ## Open points
 
@@ -63,3 +65,5 @@ Reference: docs/specs/01-scoping.md · 02-featuring.md · 03-designing.md · 04-
 
 4. Confirm: `Session saved: docs/sessions/SESSION_[app_name]_S[N].md`
 5. Do not append the `/vscode-save-session` · `/vscode-show-state` · `/vscode-show-contract` reminder after this reply.
+
+> Resuming from a SESSION file is handled by `/vscode-app` (option 2 or a pasted SESSION block) — not by this skill.

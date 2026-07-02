@@ -25,16 +25,21 @@ Prerequisite: invoked from the target project root, `.claude/` present.
    - `docs/specs/04-architect.md` (locked contract — most reliable). If present, it is authoritative for the structure and the contribution points.
    - Other `docs/specs/*` for the scoping/analysis/surfaces decisions.
    - `README.md` at the root. If both specs and README are absent: offer `/vscode-generate-readme` and stop.
-2. Read `package.json` (`engines`, `contributes`, `activationEvents`, `main`, scripts) + walk `src/` to confirm the structure (constants / types / models / controllers / views).
-3. Confirm take-over (in the user's language):
+2. **Detect tests** via `Glob` with the pattern `src/test/**/*.test.ts` → count the files for the Tests line.
+3. Read `package.json` (the manifest: `engines`, `contributes`, `activationEvents`, `main`, scripts) + walk `src/` to confirm the structure (constants / types / models / controllers / views).
+4. Confirm take-over with this exact format (in the user's language):
 
 Project loaded: [APP_NAME] v[VERSION]
-Engine: VS Code [engines.vscode] · TypeScript · esbuild
-Entities detected: [list]
-Contribution points: [N commands · M views · settings/keybindings]
-Webview: [yes/no] · Salesforce CLI: [yes/no] · Tests: [yes/no]
-Specs: [docs/specs present: yes/no]
-Generator rules applied.
 
-4. Read and apply all rules (`CLAUDE.md`, `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/verification.md`, + `@rules/webview.md`/`webview-ui.md` if webview, `@rules/sf-cli.md` if sf) to any later change. The `@rules/*` are not auto-imported: read them before any code change.
-5. Any structural or security deviation detected between the code and the rules (or vs `docs/specs/04-architect.md`): report it, do not fix without a request (hand off to `/vscode-fix-issue` or `/vscode-refactor-code`).
+Stack : VS Code extension · TypeScript · esbuild
+Contributions: [N commands · M views · settings/keybindings]
+Entities detected: [list]
+Webview: [hub | per-feature | none]
+Tests : [present ([N] files) | absent]
+Salesforce CLI: [enabled (sf v2 runner) | disabled]
+Specs: [docs/specs present: yes/no]
+
+Generator rules applied. Ready for: development · fixes · improvements · adjustments.
+
+5. Read and apply all rules (`CLAUDE.md`, `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/verification.md`, + `@rules/webview.md`/`webview-ui.md` if webview, `@rules/sf-cli.md` if sf, `@rules/tests.md` if tests present) to any later change. The `@rules/*` are not auto-imported: read them before any code change.
+6. Any structural or security deviation detected between the code and the rules (or vs `docs/specs/04-architect.md`): report it, do not fix without a request (hand off to `/vscode-fix-issue` or `/vscode-refactor-code`).

@@ -65,13 +65,13 @@ Produce the sheet (in the user's language):
 - Dropped — Won't (out of scope, deliberate): [list]
 
 **Technical constraints**
-- Target: VS Code extension · TypeScript strict · esbuild · `engines.vscode` [floor from Phase 1]
-- UI: native surfaces (auto-themed) [+ webview if Phase 1 = Yes]
+- Runtime: VS Code ≥ [engines floor from Phase 1] · Node (extension host) · TypeScript strict · esbuild
 - State: globalState/workspaceState · SecretStorage · configuration
 - i18n: [Yes/No] — package.nls + vscode.l10n
-- Salesforce CLI (`sf` v2): [Yes/No] [+ starter Org Manager if Yes]
-- Icon: [Yes/No]
 - Tests: [Yes/No] — @vscode/test-cli + Mocha
+- Icon: [Yes/No]
+- Webview: [Yes/No] — native surfaces (auto-themed) otherwise; hosting model (hub / one tab per feature) decided in Phase 3 if ≥ 2 webview features
+- Salesforce CLI: [Yes/No] — `sf` v2 runner + starter Org Manager (if Yes)
 - Validated libraries: [Phase 1 list]
 
 **Calibration (confirmed here, from the v1.0 feature count)**

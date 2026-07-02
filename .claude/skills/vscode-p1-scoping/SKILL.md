@@ -45,21 +45,26 @@ Start with the objective, then establish the project root (folder name → locat
 3. **`AskUserQuestion` — call 2** (1 question):
    - **Extension icon**: `No` (recommended — VS Code default, can be added later) · `Yes`. If `Yes`, ask the `.png` path (128px+) as free-form text.
 
-### Engine floor (announced, not asked)
+## 2. Engine floor (announced, not asked)
 
 Announce the `engines.vscode` policy: **conservative floor** (~6-12 months back) for broad compatibility, with `@types/vscode` pinned **exactly** to that floor. **Verify the current VS Code version** before pinning (`npm view @types/vscode versions`, VS Code release notes) and state the chosen floor. See `@rules/manifest.md` / `@rules/config.md`. Fixed by the framework (announced, not voted): TypeScript strict, esbuild, native VS Code theming, native state stores (no DB).
 
-## 2. Libraries
+## 3. Provisional calibration — announced at the end of Phase 1
+
+Apply the CALIBRATION table in `CLAUDE.md` (canonical source): Small (< 10 files and ≤ 5 features) → 3 batches; Medium/Large (≥ 10 or > 5) → 4 batches; divergent criteria → the highest wins. **+1 batch if tests are enabled.** A webview and/or the Salesforce integration add files and push the size up (no dedicated batch).
+
+Announce it as **provisional** (template, rendered in the user's language):
+
+Provisional calibration: [Small | Medium/Large] — [N] batches (incl. 1 test batch if enabled)
+(Confirmed at the end of Phase 2, after counting the real features.)
+
+The real feature count is not known yet (features are elicited in Phase 2). The calibration is **confirmed and locked at the end of Phase 2**, on the v1.0 feature count.
+
+## 4. Libraries
 
 Any library outside the stack (a parser, a schema lib like zod…) is proposed and validated here — none can be added later without a declaration protocol. Default: no extra runtime dependency (`vscode` API + native stores cover most needs; `sf` integration shells out, no lib).
 
-## 3. Provisional calibration — announced at the end of Phase 1
-
-Apply the CALIBRATION table in `CLAUDE.md` (canonical source): Small (< 10 files and ≤ 5 features) → 3 batches; Medium/Large (≥ 10 or > 5) → 4 batches; divergent criteria → the highest wins. **+1 batch if tests are enabled.** A webview and/or the Salesforce integration add files and push the size up.
-
-Announce it as **provisional**: the real feature count is not known yet (features are elicited in Phase 2). The calibration is **confirmed and locked at the end of Phase 2**, on the v1.0 feature count.
-
-## 4. Write the spec
+## 5. Write the spec
 
 Write `docs/specs/01-scoping.md` (in the user's language) capturing: objective, i18n, tests, webview (Yes/No), Salesforce CLI integration (Yes/No), icon, the engine floor (with the verified current version noted), validated libraries, and the provisional calibration (size + number of batches — confirmed in Phase 2). If `docs/specs/` does not exist yet, create it (it will live in the generated project root).
 
