@@ -29,6 +29,8 @@ For Dev Hub-targeting commands, the org flag is `-v, --target-dev-hub` instead o
 | System/CLI info (help/version/plugins), org limits, direct REST/GraphQL requests, diagnostics | `platform-api.md` | §1 System & global · §12 Limits & diagnostics · §13 Direct API |
 | Experience Cloud, Lightning local dev, Agentforce, Code Analyzer, plugin development | `advanced.md` | §14-19 (recent plugins) |
 
+> **Scaffold scope (v1)**: the default generated scaffold uses the **org** capabilities (list/login/logout/config → `auth-orgs.md`) plus a `data query` / `data export` demo (`data.md`, with `apex.md` for the Apex demo). `packaging.md`, `advanced.md`, and the deeper reaches of `users-schema.md` / `platform-api.md` are **beyond the default v1 scaffold** — catalog reference for when a validated feature needs them, not part of the auto-generated starter. Pull a section in only when a Phase 1/2 feature calls for it.
+
 ## Local verification
 
 ```bash

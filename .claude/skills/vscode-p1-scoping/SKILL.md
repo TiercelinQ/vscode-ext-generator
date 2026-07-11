@@ -51,7 +51,7 @@ Announce the `engines.vscode` policy: **conservative floor** (~6-12 months back)
 
 ## 3. Provisional calibration — announced at the end of Phase 1
 
-Apply the CALIBRATION table in `CLAUDE.md` (canonical source): Small (< 10 files and ≤ 5 features) → 3 batches; Medium/Large (≥ 10 or > 5) → 4 batches; divergent criteria → the highest wins. **+1 batch if tests are enabled.** A webview and/or the Salesforce integration add files and push the size up (no dedicated batch).
+Apply the CALIBRATION table in `CLAUDE.md` (canonical source) — it holds the size thresholds, the batch counts, and the +1 batch when tests are enabled; do not restate them here. A webview and/or the Salesforce integration add files and push the size up (no dedicated batch).
 
 Announce it as **provisional** (template, rendered in the user's language):
 

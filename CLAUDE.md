@@ -13,7 +13,7 @@
 - **Closed/enumerable choices are asked with the `AskUserQuestion` tool** (clickable options, the recommended option first / marked `(recommended)`) — never make the user type an answer that can be enumerated (tests Yes/No, webview Yes/No, sf integration Yes/No, start menu…). Free-form text is reserved for non-enumerable input only (free description, file paths, SOQL). Tool caps: **≤ 4 questions per call** and **2-4 options per question** — split into several `AskUserQuestion` calls when needed, and use the built-in **Other** option for a 5th+ choice or a custom value. **Never call `AskUserQuestion` for a free-form / non-enumerable prompt** (objective, folder name/location, file path): the tool requires ≥ 2 options and errors otherwise — ask those as plain text.
 - Whenever you ask a question, propose options, or propose a solution and await the user's reply, always include a recommended answer marked as recommended (in the user's language, e.g. `(recommended)`), chosen as the most pertinent for the context.
 - No unsolicited recap. No emojis. No filler.
-- Append at the end of every reply (except after `/vscode-save-session`, `/vscode-show-state`, `/vscode-show-contract`):
+- Append at the end of every reply (except after `/vscode-save-session`, `/vscode-show-state`, `/vscode-show-contract`, `/vscode-save-memory`):
   `/vscode-save-session` · `/vscode-show-state` · `/vscode-show-contract`
 
 ---

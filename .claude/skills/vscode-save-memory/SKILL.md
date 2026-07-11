@@ -20,6 +20,8 @@ A native memory file + a one-line pointer in `MEMORY.md`.
 
 ---
 
+Offered after resolving an anomaly ("Do you want to remember this point?"), or on explicit demand.
+
 ## Step 1 — Categorize
 
 Ask what to retain (in the user's language):

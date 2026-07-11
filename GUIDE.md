@@ -11,7 +11,7 @@ vscode/
 ├── CLAUDE.md                 # Instructions core (EN) · persona · communication · index commandes · calibrage
 ├── GUIDE.md                  # Ce fichier
 ├── README.md                 # Présentation du repo (EN)
-├── LICENSE.txt
+├── LICENSE
 └── .claude/
     ├── webview-ui.md         # UNIQUE référence visuelle (tokens --vscode-*, CSP+nonce, codicons, squelettes de layout/régions) — chargée à la demande si webview
     ├── sf-cli-reference/     # Catalogue commandes/flags sf v2 (INDEX.md + 8 fichiers par capacité) — chargé par section si intégration Salesforce

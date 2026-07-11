@@ -67,10 +67,16 @@ export function onConfigChange(cb: () => void): vscode.Disposable {
     if (e.affectsConfiguration("myext")) cb();
   });
 }
+
+// Salesforce CLI integration only (Phase 1) — the sf binary path, injected as `new SfCli(getSfBin)`. @rules/sf-cli.md
+export function getSfBin(): string {
+  return getSetting("SF_PATH", "") || "sf";   // empty setting → "sf", resolved from PATH by cross-spawn
+}
 ```
 
 - Every setting read here is declared in `contributes.configuration` (`@rules/manifest.md`) with `myext.*` keys.
 - Register the change listener's disposable into `context.subscriptions`.
+- **`getSfBin()` is scaffolded only when the Salesforce CLI integration is on** (Phase 1): it reads `CONFIG.SF_PATH` (`myext.sfPath`, declared in `contributes.configuration`) and falls back to `"sf"`. It is the single reader injected into `SfCli` — `sf-cli.ts` never reads the setting itself (`@rules/sf-cli.md`).
 
 ## Anti-patterns — what NOT to do
 

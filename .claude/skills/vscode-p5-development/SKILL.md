@@ -55,7 +55,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 
 ## Last batch — mandatory extra deliverables
 
-- `package.json` finalized (identity, `engines.vscode` floor + matching `@types/vscode`, `contributes`, `main`, scripts), `esbuild.js`, `tsconfig.json`, `eslint.config.mjs`, `.prettierrc`, `.vscodeignore`, `.vscode/launch.json` + `.vscode/tasks.json` (F5 debug), a `LICENSE` file (else `vsce package` warns), and `package.nls*.json` + `l10n/` if i18n.
+- `package.json` finalized (identity, `engines.vscode` floor + matching `@types/vscode`, `contributes`, `main`, scripts), `esbuild.js`, `tsconfig.json`, `eslint.config.mjs`, `.prettierrc`, `.vscodeignore`, `.vscode/launch.json` + `.vscode/tasks.json` (F5 debug), a `LICENSE` file and a minimal `CHANGELOG.md` (`# Change Log` + a `## 1.0.0` initial-release entry — `vsce package` warns without either, and both ship in the `.vsix` per `@rules/manifest.md`), and `package.nls*.json` + `l10n/` if i18n.
 - Install and run instructions:
   ```
   npm install

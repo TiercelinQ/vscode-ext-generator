@@ -89,16 +89,13 @@ function getNonce(): string {
 
 ## Message passing (typed)
 
-The webview and the extension host never share memory; they exchange typed messages. Define the message union in `src/types.ts` and use it on both sides.
+The webview and the extension host never share memory — they exchange **typed** messages. The full protocol (the `src/types.ts` message union, host-side routing + incoming-message validation, the `ready` handshake for the initial state, `setState`/`getState`) lives in **`@rules/webview.md` — "Typed message bridge"**, the single source. On the **webview (UI) side**, the script only renders host state and forwards user intents; it holds no business logic and no secret:
 
 ```ts
-// extension host → webview
-panel.webview.postMessage({ type: "orgs:set", orgs });
-// webview → extension host
-vscode.postMessage({ type: "org:setDefault", username });
+// webview script — render on a host message, forward intents (never business logic)
+window.addEventListener("message", (e) => render(e.data));
+button.addEventListener("click", () => vscode.postMessage({ type: "org:setDefault", username }));
 ```
-
-The extension side handles `onDidReceiveMessage` in a controller; the webview side handles `window.addEventListener("message", ...)`. Never put business logic in the webview script — it only renders and forwards intents.
 
 ## Retained layout primitives (no theme tokens needed)
 

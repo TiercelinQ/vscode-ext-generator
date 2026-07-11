@@ -139,7 +139,7 @@ my-extension/
 - `.claude/webview-ui.md` - the only visual reference (webview `--vscode-*` tokens, CSP + nonce)
 - `.claude/sf-cli-reference/` - `sf` v2 command/flag catalog (`INDEX.md` + 8 capability files), the source of truth for sf commands — consulted by section when the Salesforce integration is on
 - `.claude/rules/` - domain rules:
-  - `architecture.md` · `manifest.md` · `webview.md` · `state.md` · `errors.md` · `security.md` · `i18n.md` · `config.md` · `tests.md` · `sf-cli.md`
+  - `architecture.md` · `manifest.md` · `webview.md` · `state.md` · `errors.md` · `security.md` · `i18n.md` · `config.md` · `tests.md` · `sf-cli.md` · `verification.md` · `readme.md`
   - `verification.md` - single source of truth for executable + static checks
 
 ---

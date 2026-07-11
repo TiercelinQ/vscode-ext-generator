@@ -125,7 +125,7 @@ Versioning notes:
 - **`@types/vscode` is pinned EXACT** (no caret) to the `engines.vscode` floor — they must agree, otherwise the types expose APIs the floor lacks (`@rules/manifest.md`).
 - `engines.vscode`: conservative floor (~6-12 months back). **Verify the current VS Code version at generation** (`npm view @types/vscode versions`, VS Code release notes) and set both the engine and `@types/vscode` accordingly.
 - `eslint ^10`: flat config (`eslint.config.mjs` — already the format). Requires **Node ≥ 20.19**. `typescript-eslint ^8` (latest 8.62) stays the major: its peer range already covers `eslint ^10` **and** `typescript` (`>=4.8.4 <6.1.0`) — there is no v9, no major bump needed.
-- `typescript ^6`: peer-compatible with `typescript-eslint 8.62`. Breaking notes that do **not** affect the template: `moduleResolution: classic` removed (the tsconfig uses `Node16` ✓), `esModuleInterop: false` forbidden (the tsconfig sets it `true` ✓, also required by `cross-spawn`).
+- `typescript ^6`: **6.0.x shipped stable and is peer-compatible with `typescript-eslint 8.62`** (peer `<6.1.0`); the registry `latest` is now **7.x**, which typescript-eslint 8 does **not** support, so `^6` (→ 6.0.x) is deliberate — not `latest` / `^7`, until a typescript-eslint major widens the range. Breaking notes that do **not** affect the template: `moduleResolution: classic` removed (the tsconfig uses `Node16` ✓), `esModuleInterop: false` forbidden (the tsconfig sets it `true` ✓, also required by `cross-spawn`).
 - `esbuild ^0.28`: `context()` API unchanged from 0.24 — no `esbuild.js` change.
 - `@vscode/vsce`: packaging/publishing CLI (`vsce package` → `.vsix`).
 - `@vscode/codicons`: only if a webview uses codicon glyphs (its CSS is loaded via `asWebviewUri`).
