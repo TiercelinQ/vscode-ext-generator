@@ -32,7 +32,7 @@ vscode/
     │   ├── vscode-app/            # Menu démarrage / reprise / maintenance (4 options)
     │   ├── vscode-p1-scoping/     # Scoping — paramètres + engine floor → docs/specs/01-scoping.md
     │   ├── vscode-p2-featuring/   # Fiche besoins → docs/specs/02-featuring.md
-    │   ├── vscode-p3-designing/   # Surfaces & UX (contribution points) → docs/specs/03-designing.md
+    │   ├── vscode-p3-surfaces/   # Surfaces & UX (contribution points) → docs/specs/03-surfaces.md
     │   ├── vscode-p4-architect/   # Contrat architectural verrouillé → docs/specs/04-architect.md
     │   ├── vscode-p5-development/ # Livraison par lots + packaging .vsix (enchaînement auto)
     │   ├── vscode-add-feature/    # Ajouter une feature à un projet livré (respect contrat + sécurité)
@@ -117,7 +117,7 @@ Nom de l'extension + élicitation des features + MoSCoW + périmètre v1.0 + cal
 
 ### Phase 3 — Surfaces
 
-Mapping des features sur les contribution points VS Code : commandes (Command Palette), vues arbre, conteneur de vues (activity bar), status bar, menus contextuels, keybindings, webview (si activée). Si ≥ 2 features passent par un webview, choix du **modèle d'hébergement** : un webview **hub** (navigation interne via `<nav>`) ou un **onglet dédié par feature** (recommandation contextuelle). Pour chaque webview : type (onglet `WebviewPanel` recommandé / vue dockée) + **structure de layout** (squelette de régions sémantiques `header/nav/main/aside/footer`, voir `webview-ui.md`). Validation bloquante. Écrit `docs/specs/03-designing.md`.
+Mapping des features sur les contribution points VS Code : commandes (Command Palette), vues arbre, conteneur de vues (activity bar), status bar, menus contextuels, keybindings, webview (si activée). Si ≥ 2 features passent par un webview, choix du **modèle d'hébergement** : un webview **hub** (navigation interne via `<nav>`) ou un **onglet dédié par feature** (recommandation contextuelle). Pour chaque webview : type (onglet `WebviewPanel` recommandé / vue dockée) + **structure de layout** (squelette de régions sémantiques `header/nav/main/aside/footer`, voir `webview-ui.md`). Validation bloquante. Écrit `docs/specs/03-surfaces.md`.
 
 ### Phase 4 — Architect
 
@@ -215,7 +215,7 @@ Après correction (`/vscode-fix-issue` ou Phase 5), Claude produit un bilan de n
 | `/vscode-app`           | Haiku  | Menu démarrage / reprise / maintenance               |
 | `/vscode-p1-scoping`    | Sonnet | Scoping — paramètres + engine floor                  |
 | `/vscode-p2-featuring`  | Sonnet | Fiche besoins                                        |
-| `/vscode-p3-designing`  | Sonnet | Surfaces & UX (contribution points)                  |
+| `/vscode-p3-surfaces`  | Sonnet | Surfaces & UX (contribution points)                  |
 | `/vscode-p4-architect`  | Sonnet | Contrat architectural verrouillé                     |
 | `/vscode-p5-development`| Sonnet | Livraison par lots + packaging .vsix                 |
 | `/vscode-add-feature`   | Sonnet | Ajouter une feature à un projet livré                |

@@ -63,7 +63,7 @@ export function getSetting<T>(key: keyof typeof CONFIG, fallback: T): T {
   return vscode.workspace.getConfiguration("myext").get<T>(CONFIG[key], fallback);
 }
 export function onConfigChange(cb: () => void): vscode.Disposable {
-  return vscode.workspace.onDidConfigurationChange((e) => {
+  return vscode.workspace.onDidChangeConfiguration((e) => {
     if (e.affectsConfiguration("myext")) cb();
   });
 }

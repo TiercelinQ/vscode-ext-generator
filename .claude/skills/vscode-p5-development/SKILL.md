@@ -109,7 +109,7 @@ Once the last batch (plus the test batch if any) is delivered, close Phase 5 wit
 - **Project folder** — the project root (clickable).
 - **README.md** — how to run, stack, tree, contribution points (clickable).
 - **Generated `CLAUDE.md`** — the extension identity for future sessions (clickable).
-- **Documentation — phase specs** — one clickable link each: `docs/specs/01-scoping.md`, `docs/specs/02-featuring.md`, `docs/specs/03-designing.md`, `docs/specs/04-architect.md` (and the latest `docs/sessions/SESSION_*.md` if one exists).
+- **Documentation — phase specs** — one clickable link each: `docs/specs/01-scoping.md`, `docs/specs/02-featuring.md`, `docs/specs/03-surfaces.md`, `docs/specs/04-architect.md` (and the latest `docs/sessions/SESSION_*.md` if one exists).
 - **The `.vsix`** — the packaged artifact (clickable, if produced).
 - **How to run** — the key commands (also in the README):
 

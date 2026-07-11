@@ -86,7 +86,7 @@ Then in Claude Code:
 | `/vscode-app`           | Start menu (4 entry points incl. maintenance)      |
 | `/vscode-p1-scoping`    | Scoping - parameters + engine floor                |
 | `/vscode-p2-featuring`  | Featuring - requirements sheet + locked sizing     |
-| `/vscode-p3-designing`  | Surfaces - contribution points + UX                |
+| `/vscode-p3-surfaces`  | Surfaces - contribution points + UX                |
 | `/vscode-p4-architect`  | Architect - locked architecture contract           |
 | `/vscode-p5-development`| Auto-chained batch delivery + `.vsix`              |
 | `/vscode-add-feature`   | Add a feature to a shipped extension               |

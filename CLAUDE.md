@@ -71,7 +71,7 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 | ----- | --------------------------------- |
 | 1 - Scoping    | `docs/specs/01-scoping.md`   |
 | 2 - Featuring  | `docs/specs/02-featuring.md`   |
-| 3 - Surfaces   | `docs/specs/03-designing.md`    |
+| 3 - Surfaces   | `docs/specs/03-surfaces.md`    |
 | 4 - Architect  | `docs/specs/04-architect.md` (locked architectural contract) |
 
 `docs/specs/04-architect.md` is the **source of truth** for the project structure - re-read by `/vscode-load-project`, `/vscode-show-contract`, `/vscode-add-feature`, and `/vscode-refactor-code`.
@@ -80,9 +80,9 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 
 ## BINDING REFERENCES
 
-`webview-ui.md` is the binding reference for any webview UI the extension ships. It is **not** auto-imported (to keep the session context lean) and it is **only relevant when a webview is in scope** (Phase 1 webview question = Yes). The UI skills (`/vscode-p3-designing`, `/vscode-p4-architect`, `/vscode-p5-development`, `/vscode-add-feature`, `/vscode-fix-issue`, `/vscode-refactor-code`, `/vscode-trace-feature`) read it on demand before producing or altering webview UI. Native VS Code surfaces (commands, tree views, status bar, quick picks, menus) are themed automatically by VS Code — there is no design-system or layout file to honor for them.
+`webview-ui.md` is the binding reference for any webview UI the extension ships. It is **not** auto-imported (to keep the session context lean) and it is **only relevant when a webview is in scope** (Phase 1 webview question = Yes). The UI skills (`/vscode-p3-surfaces`, `/vscode-p4-architect`, `/vscode-p5-development`, `/vscode-add-feature`, `/vscode-fix-issue`, `/vscode-refactor-code`, `/vscode-trace-feature`) read it on demand before producing or altering webview UI. Native VS Code surfaces (commands, tree views, status bar, quick picks, menus) are themed automatically by VS Code — there is no design-system or layout file to honor for them.
 
-`sf-cli-reference/` is the binding reference for the **`sf` v2 command/flag catalog** — the source of truth for exact command names, subcommands, and flags (never invent an `sf` command or flag from memory). It is **only relevant when the Salesforce CLI integration is on** (the gate of `@rules/sf-cli.md`) and is **loaded on demand by section, never read whole**: read `sf-cli-reference/INDEX.md` first (the capability → file map), then open only the section file matching the needed capability (`auth-orgs.md`, `data.md`, `apex.md`, etc.). `@rules/sf-cli.md` is the hub that routes every sf-aware skill to it.
+`sf-cli-reference/` is the binding reference for the **`sf` v2 command/flag catalog** — the source of truth for exact command names, subcommands, and flags (never invent an `sf` command or flag from memory). It is **only relevant when the Salesforce CLI integration is on** (the gate of `rules/sf-cli.md`) and is **loaded on demand by section, never read whole**: read `sf-cli-reference/INDEX.md` first (the capability → file map), then open only the section file matching the needed capability (`auth-orgs.md`, `data.md`, `apex.md`, etc.). `rules/sf-cli.md` is the hub that routes every sf-aware skill to it.
 
 ---
 
@@ -99,7 +99,7 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 | State                | `globalState` / `workspaceState` (Memento) · `SecretStorage` · `configuration` settings |
 | Icons                | Codicons (built into VS Code) - no icon font dependency        |
 | Internationalization | FR/EN - FR default - `package.nls.json` + `vscode.l10n` (if enabled) |
-| Salesforce CLI       | `sf` v2 wrapper (if selected in Phase 1) - see @rules/sf-cli.md + `sf-cli-reference/INDEX.md` (command/flag catalog) |
+| Salesforce CLI       | `sf` v2 wrapper (if selected in Phase 1) - see rules/sf-cli.md + `sf-cli-reference/INDEX.md` (command/flag catalog) |
 | Tests                | `@vscode/test-cli` + Mocha (if selected in Phase 1)          |
 | Packaging            | `@vscode/vsce` (`vsce package` → `.vsix`)                    |
 | Quality              | ESLint + Prettier · TSDoc on classes and public API           |
@@ -109,21 +109,21 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 ## ABSOLUTE RULES
 
 - Native VS Code surfaces (commands, tree views, status bar, quick picks, menus) are **never re-styled** - they follow the user's theme automatically. There is no palette and no custom color choice.
-- Webview UI: **zero hardcoded color/size** - only `--vscode-*` CSS variables and the `body.vscode-dark/light/high-contrast` classes (see @rules/webview.md / `webview-ui.md`). Icons via codicons.
-- Webview security: strict CSP with a per-load **nonce**, `webview.asWebviewUri` for every local resource, `localResourceRoots` set. Detail: @rules/security.md / @rules/webview.md
+- Webview UI: **zero hardcoded color/size** - only `--vscode-*` CSS variables and the `body.vscode-dark/light/high-contrast` classes (see rules/webview.md / `webview-ui.md`). Icons via codicons.
+- Webview security: strict CSP with a per-load **nonce**, `webview.asWebviewUri` for every local resource, `localResourceRoots` set. Detail: rules/security.md / rules/webview.md
 - Business errors and confirmations: native VS Code surfaces only - `window.showErrorMessage` / `showWarningMessage` / `showInformationMessage`, `showQuickPick` for confirmations. Logs go to an `OutputChannel` / `LogOutputChannel`. Zero `alert()`/`confirm()` in a webview for business flow.
 - Every disposable (commands, providers, listeners, status bar items, OutputChannel) is pushed into `context.subscriptions`. Zero leak.
 - Activation: rely on the **auto-generated** `activationEvents` from `contributes` (VS Code ≥ 1.74). Never use `"*"`; `onStartupFinished` only with a justified reason.
 - State access only via the typed wrappers (`models/storage.ts`, `models/secrets.ts`, `models/configuration.ts`) - never `context.globalState.get` scattered across the code. Secrets only in `SecretStorage`, never in `globalState`/settings.
 - Zero `// TODO`, zero unjustified empty implementation. ESLint clean · Prettier · TS strict with no unjustified `any`.
 - Zero deprecated VS Code API.
-- If the Salesforce CLI integration is enabled (Phase 1): all `sf` calls go through `src/models/sf-cli.ts` via **`cross-spawn`** (resolves the Windows `sf.cmd` shim) with an **argument array** - never `node:child_process` directly, never a concatenated shell string. See @rules/sf-cli.md
-- If tests enabled in Phase 1: test suite mandatory (`@vscode/test-cli` + Mocha) - see @rules/tests.md
+- If the Salesforce CLI integration is enabled (Phase 1): all `sf` calls go through `src/models/sf-cli.ts` via **`cross-spawn`** (resolves the Windows `sf.cmd` shim) with an **argument array** - never `node:child_process` directly, never a concatenated shell string. See rules/sf-cli.md
+- If tests enabled in Phase 1: test suite mandatory (`@vscode/test-cli` + Mocha) - see rules/tests.md
 - No library that was not validated in Phase 1.
 - At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - and produce the `.vsix` (`vsce package`). See `/vscode-p5-development`.
 - After resolving an anomaly, offer: "Do you want to remember this point? `/vscode-save-memory`"
-- NEVER read and write `settings.json`. ONLY read and write in `settings.local.json`
-Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): @rules/architecture.md · @rules/manifest.md · @rules/webview.md · @rules/state.md · @rules/errors.md · @rules/security.md · @rules/i18n.md · @rules/config.md · @rules/tests.md · @rules/sf-cli.md · @rules/verification.md · @rules/readme.md
+- NEVER read and write the generator's own `.claude/settings.json` — ONLY read and write in `settings.local.json`. (The `.claude/settings.json` written into a delivered project in Phase 5 is a legitimate deliverable; this rule concerns this framework's own file, not the generated one.)
+Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): rules/architecture.md · rules/manifest.md · rules/webview.md · rules/state.md · rules/errors.md · rules/security.md · rules/i18n.md · rules/config.md · rules/tests.md · rules/sf-cli.md · rules/verification.md · rules/readme.md
 
 ---
 
@@ -138,7 +138,7 @@ All commands below are Claude Code skills invocable with `/`:
 | `/vscode-app`           | `skills/vscode-app/`           | Start / resume / maintenance menu            |
 | `/vscode-p1-scoping`    | `skills/vscode-p1-scoping/`    | Scoping - parameters (tests, webview, i18n, sf, icon) |
 | `/vscode-p2-featuring`  | `skills/vscode-p2-featuring/`  | Extension name + features (MoSCoW) + v1.0 scope + locked sizing |
-| `/vscode-p3-designing`  | `skills/vscode-p3-designing/`  | Surfaces & UX - contribution points          |
+| `/vscode-p3-surfaces`  | `skills/vscode-p3-surfaces/`  | Surfaces & UX - contribution points          |
 | `/vscode-p4-architect`  | `skills/vscode-p4-architect/`  | Locked architectural contract                |
 | `/vscode-p5-development`| `skills/vscode-p5-development/`| Batch delivery + `.vsix` packaging           |
 
@@ -165,6 +165,23 @@ All commands below are Claude Code skills invocable with `/`:
 
 ---
 
+## WORKFLOWS — chaining by situation
+
+Which command(s) to run for a given intent. The **generation pipeline** (p1→p5) is **not** re-detailed here — it self-chains from `/vscode-app` (see `## PIPELINE` + each skill's `→ Chain to` line). This section covers the **entry point and the maintenance sequences**.
+
+- **New extension** — `/vscode-app` (chains p1-scoping → … → p5-development on its own), then `/vscode-run-tests`.
+- **Resume an in-progress generation** — `/vscode-show-state` (or `/vscode-app` → resume), continue at the reported phase.
+- **Delivered extension — always `/vscode-load-project` first**, then by intent:
+  - Add a feature — `/vscode-add-feature` → `/vscode-run-tests`
+  - Fix a bug — `/vscode-fix-issue` → `/vscode-run-tests`
+  - Refactor (behavior-preserving, plan validated first) — `/vscode-refactor-code` → `/vscode-run-tests`
+  - Understand / audit the code — `/vscode-trace-feature`
+  - Refresh the README — `/vscode-generate-readme`
+- **Verify on demand** — `/vscode-run-tests` (install · typecheck · lint · build · package).
+- **End of session** — `/vscode-save-session`; remember a lesson not to repeat — `/vscode-save-memory`.
+
+---
+
 ## CALIBRATION (FROZEN AFTER PHASE 2)
 
 Canonical source of the calibration. Skills refer to it - do not duplicate this table elsewhere.
@@ -174,4 +191,4 @@ Canonical source of the calibration. Skills refer to it - do not duplicate this 
 | Small         | < 10     | ≤ 5             | 3                  | 4                    |
 | Medium / Large| ≥ 10     | > 5             | 4                  | 5                    |
 
-The extra batch corresponds to the test suite + dev dependencies (see @rules/tests.md). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files/features and count toward the size.
+The extra batch corresponds to the test suite + dev dependencies (see rules/tests.md). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files/features and count toward the size.

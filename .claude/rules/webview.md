@@ -12,7 +12,7 @@ A list/tree of items is a `TreeDataProvider`, not a webview. A confirmation is a
 
 ## Hosting model — one hub vs one tab per feature
 
-When **two or more features** need webview UI, decide **once** how they are hosted (Phase 3 — `/vscode-p3-designing`, locked in the Phase 4 contract). This is **orthogonal** to single-instance, which always applies per webview (below):
+When **two or more features** need webview UI, decide **once** how they are hosted (Phase 3 — `/vscode-p3-surfaces`, locked in the Phase 4 contract). This is **orthogonal** to single-instance, which always applies per webview (below):
 
 - **Hub (single webview)** — one `viewType`, one open command, one panel. The features are views **inside** the same webview, switched by the internal `<nav>` landmark (`webview-ui.md` Panel layout). Lighter surface (one tab, one command); fits features that are views of the **same** dataset/workspace. The host posts the active view in the state; the webview renders the matching view (`section`/`article` set inside `main`).
 - **One tab per feature** — one `viewType` + one open command + one panel **per** feature (the "Multiple webviews" convention below + the namespacing in `@rules/architecture.md`). Each feature opens in its **own** editor tab; fits **independent** features (each behaves like its own document).

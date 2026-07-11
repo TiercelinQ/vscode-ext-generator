@@ -94,4 +94,4 @@ End with:
 
 Once validated, write the sheet to `docs/specs/02-featuring.md` (in the user's language), including the extension name, the MoSCoW table with the v1.0 column, and the **two distinct exclusion sections (Deferred — Could / Dropped — Won't)**.
 
-→ Chain to `/vscode-p3-designing` after validation.
+→ Chain to `/vscode-p3-surfaces` after validation.

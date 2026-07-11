@@ -1,10 +1,10 @@
 ---
-name: vscode-p3-designing
+name: vscode-p3-surfaces
 description: Phase 3 of the VS Code extension generation cycle — surfaces & UX, mapping the validated features onto VS Code contribution points (commands, views, status bar, menus, webview), validated synthesis written to the spec before Phase 4.
 model: sonnet
 ---
 
-# /vscode-p3-designing — Surfaces & UX
+# /vscode-p3-surfaces — Surfaces & UX
 
 ## Role
 UX designer — map the validated features onto VS Code's native contribution points.
@@ -13,7 +13,7 @@ UX designer — map the validated features onto VS Code's native contribution po
 Decide which surfaces the extension exposes (commands, views, status bar, menus, optional webview) and how the user reaches each feature.
 
 ## Deliverable
-`docs/specs/03-designing.md` (written in the user's language) + on-screen synthesis.
+`docs/specs/03-surfaces.md` (written in the user's language) + on-screen synthesis.
 
 ---
 
@@ -70,6 +70,6 @@ Produce a complete synthesis: the view container(s) and view(s), the command lis
 
 ## 4. Write the spec
 
-Once validated, write the synthesis to `docs/specs/03-designing.md` (in the user's language).
+Once validated, write the synthesis to `docs/specs/03-surfaces.md` (in the user's language).
 
 → Chain to `/vscode-p4-architect` after validation.
