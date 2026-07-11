@@ -2,7 +2,7 @@
 
 > Claude Code generator for **VS Code extensions** - TypeScript · esbuild · native VS Code theming.
 
-Part of a family of Claude Code generators. See also [electron-app-generator](https://github.com/TiercelinQ/electron-app-generator), [flutter-app-generator](https://github.com/TiercelinQ/flutter-app-generator), and [python-app-generator](https://github.com/TiercelinQ/python-app-generator).
+Part of a family of Claude Code generators. See also [electron-app-generator](https://github.com/TiercelinQ/electron-app-generator), [flutter-app-generator](https://github.com/TiercelinQ/flutter-app-generator), [claude-python-app-generator](https://github.com/TiercelinQ/claude-python-app-generator), and [sf-node-generator](https://github.com/TiercelinQ/sf-node-generator).
 
 Unified edition: the full generation pipeline **plus** post-delivery maintenance skills, an explicit role per skill, persisted specs, centralized executable verification, and native memory.
 
@@ -66,8 +66,8 @@ The Salesforce integration (opt-in) additionally needs the `sf` CLI v2 on the PA
 ## Getting started
 
 ```bash
-git clone <repo-url>
-cd vscode-extension-generator
+git clone https://github.com/TiercelinQ/vscode-ext-generator.git
+cd vscode-ext-generator
 claude
 ```
 
@@ -151,6 +151,7 @@ my-extension/
 | [claude-python-app-generator](https://github.com/TiercelinQ/claude-python-app-generator) | Python · PyQt6 · QSS | Windows desktop |
 | [electron-app-generator](https://github.com/TiercelinQ/electron-app-generator) | Node.js · Electron · React · TS | Windows desktop |
 | [flutter-app-generator](https://github.com/TiercelinQ/flutter-app-generator) | Flutter · Dart · Riverpod | Android |
+| [sf-node-generator](https://github.com/TiercelinQ/sf-node-generator) | Node.js · TypeScript · Salesforce CLI | Headless CLI |
 | [vscode-ext-generator](https://github.com/TiercelinQ/vscode-ext-generator) | TypeScript · esbuild · native theming | VS Code extension |
 
 ---
