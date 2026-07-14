@@ -157,10 +157,6 @@ Add a final dedicated batch — `src/test/` (`@vscode/test-cli` + Mocha) + `.vsc
 - Automatic chaining between batches without confirmation.
 - Last batch: install/run instructions (`npm install`, F5, `npm run typecheck`, `npm run lint`, `npm run build`, `vsce package`) + `README.md` at the root.
 
-## Integrity verification
-
-Per-batch and cross-file integrity checks (layer responsibilities, unidirectional imports, command/view ids consistent end-to-end, disposables registered, contract) live in **`@rules/verification.md`** — the single source of truth for verification. Run them silently every batch; report only on a discrepancy. Cross-file checks run on the last batch.
-
 ## Anti-patterns — what NOT to do
 
 - **Do not** create UI (`createTreeView`, `createWebviewPanel`, `createStatusBarItem`) or register a command inside a model. Models are framework-light Node + the VS Code state wrappers.
@@ -191,3 +187,7 @@ File [name]:
 ## Deletions
 
 Total deletion across all files: code, imports, command/view ids (declaration in `constants.ts` + `contributes` block + handler + calls), types, webview message variants, CSS rules, i18n keys (`package.nls.json` + `bundle.l10n.json`). Forbidden: commented-out code, empty implementations, residue. Deliver the complete modified files.
+
+## Integrity verification
+
+Detailed in `@rules/verification.md`. Key points: layer responsibilities respected (zero business logic in a view/controller, zero UI creation in a model) and imports unidirectional (`controllers/views → models`); every disposable pushed into `context.subscriptions`; command/view/config ids consistent end-to-end (`src/constants.ts` ↔ `contributes` ↔ registered handlers ↔ `when`-clauses ↔ calls), no orphan contribution and no handler without a contribution; `src/extension.ts` the only composition root; architectural contract (`docs/specs/04-architect.md`) respected. Run silently every batch; cross-file checks on the last batch.

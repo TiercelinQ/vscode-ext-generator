@@ -181,3 +181,7 @@ export default tseslint.config(
 - **Do not** emit JS with `tsc` for shipping — esbuild produces `dist/`; `tsc` is typecheck-only.
 - **Do not** hardcode an id/key outside `src/constants.ts`.
 - **Do not** ship `out/`, `src/`, or sourcemaps in the `.vsix` (`.vscodeignore`, `@rules/manifest.md`).
+
+## Integrity verification
+
+Detailed in `@rules/verification.md`. Key points: `vscode` kept external in the esbuild config and `main` pointing at `dist/extension.js` (the webview script bundled separately, `tsc` typecheck-only); `@types/vscode` pinned exact to the `engines.vscode` floor (never a caret); every id/key declared in `src/constants.ts` and nowhere else; dependency versions re-confirmed at generation; `.vscodeignore` excluding sources, tests, specs, and sourcemaps from the `.vsix`.

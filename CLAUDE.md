@@ -99,7 +99,7 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 | State                | `globalState` / `workspaceState` (Memento) · `SecretStorage` · `configuration` settings |
 | Icons                | Codicons (built into VS Code) - no icon font dependency        |
 | Internationalization | FR/EN - FR default - `package.nls.json` + `vscode.l10n` (if enabled) |
-| Salesforce CLI       | `sf` v2 wrapper (if selected in Phase 1) - see rules/sf-cli.md + `sf-cli-reference/INDEX.md` (command/flag catalog) |
+| Salesforce CLI       | `sf` v2 wrapper (if selected in Phase 1) - see `rules/sf-cli.md` + `sf-cli-reference/INDEX.md` (command/flag catalog) |
 | Tests                | `@vscode/test-cli` + Mocha (if selected in Phase 1)          |
 | Packaging            | `@vscode/vsce` (`vsce package` → `.vsix`)                    |
 | Quality              | ESLint + Prettier · TSDoc on classes and public API           |
@@ -109,21 +109,21 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 ## ABSOLUTE RULES
 
 - Native VS Code surfaces (commands, tree views, status bar, quick picks, menus) are **never re-styled** - they follow the user's theme automatically. There is no palette and no custom color choice.
-- Webview UI: **zero hardcoded color/size** - only `--vscode-*` CSS variables and the `body.vscode-dark/light/high-contrast` classes (see rules/webview.md / `webview-ui.md`). Icons via codicons.
-- Webview security: strict CSP with a per-load **nonce**, `webview.asWebviewUri` for every local resource, `localResourceRoots` set. Detail: rules/security.md / rules/webview.md
+- Webview UI: **zero hardcoded color/size** - only `--vscode-*` CSS variables and the `body.vscode-dark/light/high-contrast` classes (see `rules/webview.md` / `webview-ui.md`). Icons via codicons.
+- Webview security: strict CSP with a per-load **nonce**, `webview.asWebviewUri` for every local resource, `localResourceRoots` set. Detail: `rules/security.md` / `rules/webview.md`
 - Business errors and confirmations: native VS Code surfaces only - `window.showErrorMessage` / `showWarningMessage` / `showInformationMessage`, `showQuickPick` for confirmations. Logs go to an `OutputChannel` / `LogOutputChannel`. Zero `alert()`/`confirm()` in a webview for business flow.
 - Every disposable (commands, providers, listeners, status bar items, OutputChannel) is pushed into `context.subscriptions`. Zero leak.
 - Activation: rely on the **auto-generated** `activationEvents` from `contributes` (VS Code ≥ 1.74). Never use `"*"`; `onStartupFinished` only with a justified reason.
 - State access only via the typed wrappers (`models/storage.ts`, `models/secrets.ts`, `models/configuration.ts`) - never `context.globalState.get` scattered across the code. Secrets only in `SecretStorage`, never in `globalState`/settings.
 - Zero `// TODO`, zero unjustified empty implementation. ESLint clean · Prettier · TS strict with no unjustified `any`.
 - Zero deprecated VS Code API.
-- If the Salesforce CLI integration is enabled (Phase 1): all `sf` calls go through `src/models/sf-cli.ts` via **`cross-spawn`** (resolves the Windows `sf.cmd` shim) with an **argument array** - never `node:child_process` directly, never a concatenated shell string. See rules/sf-cli.md
-- If tests enabled in Phase 1: test suite mandatory (`@vscode/test-cli` + Mocha) - see rules/tests.md
+- If the Salesforce CLI integration is enabled (Phase 1): all `sf` calls go through `src/models/sf-cli.ts` via **`cross-spawn`** (resolves the Windows `sf.cmd` shim) with an **argument array** - never `node:child_process` directly, never a concatenated shell string. See `rules/sf-cli.md`
+- If tests enabled in Phase 1: test suite mandatory (`@vscode/test-cli` + Mocha) - see `rules/tests.md`
 - No library that was not validated in Phase 1.
 - At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - and produce the `.vsix` (`vsce package`). See `/vscode-p5-development`.
 - After resolving an anomaly, offer: "Do you want to remember this point? `/vscode-save-memory`"
 - NEVER read and write the generator's own `.claude/settings.json` — ONLY read and write in `settings.local.json`. (The `.claude/settings.json` written into a delivered project in Phase 5 is a legitimate deliverable; this rule concerns this framework's own file, not the generated one.)
-Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): rules/architecture.md · rules/manifest.md · rules/webview.md · rules/state.md · rules/errors.md · rules/security.md · rules/i18n.md · rules/config.md · rules/tests.md · rules/sf-cli.md · rules/verification.md · rules/readme.md
+Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): `rules/architecture.md` · `rules/manifest.md` · `rules/webview.md` · `rules/state.md` · `rules/errors.md` · `rules/security.md` · `rules/i18n.md` · `rules/config.md` · `rules/tests.md` · `rules/sf-cli.md` · `rules/verification.md` · `rules/readme.md`
 
 ---
 
@@ -191,4 +191,4 @@ Canonical source of the calibration. Skills refer to it - do not duplicate this 
 | Small         | < 10     | ≤ 5             | 3                  | 4                    |
 | Medium / Large| ≥ 10     | > 5             | 4                  | 5                    |
 
-The extra batch corresponds to the test suite + dev dependencies (see rules/tests.md). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files/features and count toward the size.
+The extra batch corresponds to the test suite + dev dependencies (see `rules/tests.md`). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files/features and count toward the size.

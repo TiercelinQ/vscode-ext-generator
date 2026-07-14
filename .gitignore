@@ -1,0 +1,26 @@
+# Local Claude Code settings - personal, never committed
+.claude/settings.local.json
+
+# Claude Code auto memory - personal, never committed
+.claude/agent-memory/
+
+# Generated app artifacts - a test extension scaffolded here during generation testing
+node_modules/
+dist/
+out/
+*.vsix
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

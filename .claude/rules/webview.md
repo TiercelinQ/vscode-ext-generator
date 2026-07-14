@@ -116,3 +116,7 @@ panel.webview.onDidReceiveMessage((msg: WebviewToHost) => {
 - **Do not** leave `retainContextWhenHidden: true` on by default — it keeps the DOM alive for every hidden webview.
 - **Do not** open a new `WebviewPanel` on each command invocation — track the reference (one per `viewType`) and `reveal()` the existing one (single-instance).
 - **Do not** forget `onDidDispose` / `context.subscriptions` — webview listeners leak otherwise.
+
+## Integrity verification
+
+Detailed in `@rules/verification.md`. Key points (if a webview is enabled): `enableScripts: true` always paired with a strict CSP + a per-render nonce, `localResourceRoots` scoped to `dist`/`media`, every local resource via `webview.asWebviewUri`; the typed message bridge (`src/types.ts`) respected, with the `ready` handshake before the first `postMessage` and every `WebviewToHost` message validated in the controller; no business logic, persistence, or secret inside the webview script; one panel per `viewType` (tracked reference + `reveal()`), `retainContextWhenHidden` off by default; `onDidDispose` and `context.subscriptions` wired; skin/tokens/skeleton per `webview-ui.md` and the hosting model locked in the Phase 4 contract.

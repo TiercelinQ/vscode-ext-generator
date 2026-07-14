@@ -117,3 +117,7 @@ Ship `dist/`, `package.json`, `package.nls*.json`, `l10n/`, `media/`, `resources
 - **Do not** ship a global keybinding or a context menu without a `when` clause.
 - **Do not** mismatch `engines.vscode` and `@types/vscode` — both pinned to the same conservative floor.
 - **Do not** bundle sources/tests/specs into the `.vsix` — keep `.vscodeignore` tight.
+
+## Integrity verification
+
+Detailed in `@rules/verification.md`. Key points: `activationEvents` minimal and auto-generated (never `"*"`); every `contributes.commands` entry has a registered handler and every handler has its contribution; command/view/config ids match `src/constants.ts`; keybindings and menus carry a `when` clause; `engines.vscode` and `@types/vscode` pinned to the same conservative floor; `main` = `dist/extension.js` and `.vscodeignore` excludes sources/tests/specs.

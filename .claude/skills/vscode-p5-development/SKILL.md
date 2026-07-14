@@ -88,7 +88,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   {
     "permissions": {
       "allow": ["Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Read", "Write", "Edit"],
-      "deny": ["Read(**/.env)", "Write(**/.env)", "Write(**/.env.*)", "Edit(**/.env)", "Edit(**/.env.*)", "Write(**/secrets/**)", "Write(**/node_modules/**)", "Write(**/dist/**)", "Write(**/out/**)", "Write(**/*.vsix)"]
+      "deny": ["Read(**/.env)", "Read(**/.env.*)", "Read(**/secrets/**)", "Write(**/.env)", "Write(**/.env.*)", "Write(**/secrets/**)", "Edit(**/.env)", "Edit(**/.env.*)", "Edit(**/secrets/**)", "Write(**/node_modules/**)", "Write(**/dist/**)", "Write(**/out/**)", "Write(**/*.vsix)"]
     },
     "hooks": {
       "Stop": [{ "hooks": [{ "type": "command", "command": "npm run lint" }] }]

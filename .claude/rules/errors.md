@@ -73,3 +73,7 @@ vscode.commands.registerCommand(CMD.ORG_REFRESH, async () => {
 - **Do not** swallow an error silently (`catch (_) {}`) — map it to a notification or log it.
 - **Do not** handle error logic in a view (tree/webview) — the controller drives notifications.
 - **Do not** invent a custom toast/dialog in a webview — use the native VS Code notifications via a posted message.
+
+## Integrity verification
+
+Detailed in `@rules/verification.md`. Key points: business errors raised or returned as `Result<T>` in the model, caught in the controller, surfaced through native notifications + the `OutputChannel`; no raw throw out of a command handler; no stack trace or secret in a notification (detail goes to the `OutputChannel`); no silently swallowed `catch`; no custom toast/dialog built inside a webview; user-facing wording decided by the controller (via i18n when enabled).

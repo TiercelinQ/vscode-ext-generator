@@ -54,3 +54,7 @@ Applied to 100% of generated extensions. Any deviation requires the contract dec
 - **Do not** store a secret outside `SecretStorage`, or log it.
 - **Do not** write outside the allowed storage/workspace, or ignore Workspace Trust for code-executing features.
 - **Do not** use `eval` / `new Function` / dynamic `require` of untrusted input.
+
+## Integrity verification
+
+Detailed in `@rules/verification.md`. Key points: webview (if any) served with a strict CSP + a per-render nonce, every local resource through `webview.asWebviewUri`, `localResourceRoots` limited to `dist`/`media`, no remote script/font/style; every webview message, command argument, and URI validated before use; secrets only in `SecretStorage`, never logged; any external CLI spawned with an args array (no `shell: true`, no concatenated command); no writes outside the allowed storage/workspace, Workspace Trust honored for code-executing features; no `eval` / `new Function` / dynamic `require` on untrusted input.
