@@ -1,7 +1,7 @@
 # VS Code Extension Generator
 
 > Senior VS Code extension / TypeScript expert. Editor extensions for the VS Code desktop, MVC architecture (models = data/state · controllers = commands/events · views = tree/webview/status bar), personal and professional use.
-> The user has 11 years of Apex/Salesforce experience. Do not explain general programming concepts. Explain only the VS Code extension API specifics that deviate from what an Apex developer would expect.
+> Do not explain general programming concepts. Explain only the VS Code extension API specifics that deviate from what a generic senior developer would expect.
 > Framework version: 1.0.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
 
 ---
@@ -40,6 +40,7 @@ Each skill opens with an explicit **Role / Goal / Deliverable** header that scop
 The generation pipeline has 5 phases. Each phase skill **opens by displaying a visible banner** (rendered in the user's language) so the user knows where they are and follows the thread. This banner is the **visible counterpart** of the internal Role/Goal/Deliverable header (which stays hidden - see ROLE PER SKILL).
 
 Phases - user-facing name + one-line intent:
+
 1. **Scoping** - destination folder, project parameters (tests, webview, i18n, Salesforce CLI, icon).
 2. **Features** - elicit, prioritize (MoSCoW), bound the v1.0 scope.
 3. **Surfaces** - map the validated features onto VS Code contribution points (commands, views, status bar, webview).
@@ -47,15 +48,17 @@ Phases - user-facing name + one-line intent:
 5. **Development** - deliver the extension in batches, package the `.vsix`.
 
 Banner format - **output it as plain Markdown, never inside a code block / fenced block** (a fenced block shows raw code-fence markers to the user). Three blocks, each on its own line, in the user's language:
+
 - an H2 heading: `## Phase N/5 — [Name]`
-- the progress map: completed phases followed by `✓`, the current phase preceded by `▶`, upcoming phases plain, joined with ` · `
-- the one-line intent, in *italics*
+- the progress map: completed phases followed by `✓`, the current phase preceded by `▶`, upcoming phases plain, joined with `·`
+- the one-line intent, in _italics_
 
 Example for Phase 2 (renders as a heading + two lines, not a fenced block):
 
 > ## Phase 2/5 — Features
+>
 > Scoping ✓ · ▶ Features · Surfaces · Architecture · Development
-> *Elicit, prioritize (MoSCoW), and bound the v1.0 scope.*
+> _Elicit, prioritize (MoSCoW), and bound the v1.0 scope._
 
 - Progress map: completed phases marked `✓`, the current phase marked `▶`, upcoming phases plain. These are **intentional progress markers** (not decorative - the no-emoji rule does not strip them).
 - Render every phase label and intent in the user's language.
@@ -67,12 +70,12 @@ Example for Phase 2 (renders as a heading + two lines, not a fenced block):
 
 The generation pipeline writes a persisted spec file per phase into `docs/specs/` of the generated project, **in addition** to showing it on screen. **Spec files are written in the user's language** (for user review).
 
-| Phase | Spec file |
-| ----- | --------------------------------- |
-| 1 - Scoping    | `docs/specs/01-scoping.md`   |
-| 2 - Featuring  | `docs/specs/02-featuring.md`   |
-| 3 - Surfaces   | `docs/specs/03-surfaces.md`    |
-| 4 - Architect  | `docs/specs/04-architect.md` (locked architectural contract) |
+| Phase         | Spec file                                                    |
+| ------------- | ------------------------------------------------------------ |
+| 1 - Scoping   | `docs/specs/01-scoping.md`                                   |
+| 2 - Featuring | `docs/specs/02-featuring.md`                                 |
+| 3 - Surfaces  | `docs/specs/03-surfaces.md`                                  |
+| 4 - Architect | `docs/specs/04-architect.md` (locked architectural contract) |
 
 `docs/specs/04-architect.md` is the **source of truth** for the project structure - re-read by `/vscode-load-project`, `/vscode-show-contract`, `/vscode-add-feature`, and `/vscode-refactor-code`.
 
@@ -88,21 +91,21 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 
 ## STACK (NON-NEGOTIABLE)
 
-| Item                 | Value                                                          |
-| -------------------- | -------------------------------------------------------------- |
-| Target               | VS Code extension (desktop)                                   |
-| Runtime              | Node.js (extension host) · `engines.vscode` conservative floor (pinned in Phase 1) |
-| Language             | TypeScript strict (`strict: true`)                            |
-| UI                   | Native VS Code surfaces (auto-themed) + optional webview (vanilla TS/HTML, `--vscode-*` tokens) |
-| Build                | esbuild (`esbuild.js` → `dist/extension.js`)                 |
-| Architecture         | MVC - `src/models/` · `src/controllers/` · `src/views/` · `src/extension.ts` composition root |
-| State                | `globalState` / `workspaceState` (Memento) · `SecretStorage` · `configuration` settings |
-| Icons                | Codicons (built into VS Code) - no icon font dependency        |
-| Internationalization | FR/EN - FR default - `package.nls.json` + `vscode.l10n` (if enabled) |
+| Item                 | Value                                                                                                                 |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Target               | VS Code extension (desktop)                                                                                           |
+| Runtime              | Node.js (extension host) · `engines.vscode` conservative floor (pinned in Phase 1)                                    |
+| Language             | TypeScript strict (`strict: true`)                                                                                    |
+| UI                   | Native VS Code surfaces (auto-themed) + optional webview (vanilla TS/HTML, `--vscode-*` tokens)                       |
+| Build                | esbuild (`esbuild.js` → `dist/extension.js`)                                                                          |
+| Architecture         | MVC - `src/models/` · `src/controllers/` · `src/views/` · `src/extension.ts` composition root                         |
+| State                | `globalState` / `workspaceState` (Memento) · `SecretStorage` · `configuration` settings                               |
+| Icons                | Codicons (built into VS Code) - no icon font dependency                                                               |
+| Internationalization | FR/EN - FR default - `package.nls.json` + `vscode.l10n` (if enabled)                                                  |
 | Salesforce CLI       | `sf` v2 wrapper (if selected in Phase 1) - see `rules/sf-cli.md` + `sf-cli-reference/INDEX.md` (command/flag catalog) |
-| Tests                | `@vscode/test-cli` + Mocha (if selected in Phase 1)          |
-| Packaging            | `@vscode/vsce` (`vsce package` → `.vsix`)                    |
-| Quality              | ESLint + Prettier · TSDoc on classes and public API           |
+| Tests                | `@vscode/test-cli` + Mocha (if selected in Phase 1)                                                                   |
+| Packaging            | `@vscode/vsce` (`vsce package` → `.vsix`)                                                                             |
+| Quality              | ESLint + Prettier · TSDoc on classes and public API                                                                   |
 
 ---
 
@@ -123,7 +126,7 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 - At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - and produce the `.vsix` (`vsce package`). See `/vscode-p5-development`.
 - After resolving an anomaly, offer: "Do you want to remember this point? `/vscode-save-memory`"
 - NEVER read and write the generator's own `.claude/settings.json` — ONLY read and write in `settings.local.json`. (The `.claude/settings.json` written into a delivered project in Phase 5 is a legitimate deliverable; this rule concerns this framework's own file, not the generated one.)
-Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): `rules/architecture.md` · `rules/manifest.md` · `rules/webview.md` · `rules/state.md` · `rules/errors.md` · `rules/security.md` · `rules/i18n.md` · `rules/config.md` · `rules/tests.md` · `rules/sf-cli.md` · `rules/verification.md` · `rules/readme.md`
+  Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): `rules/architecture.md` · `rules/manifest.md` · `rules/webview.md` · `rules/state.md` · `rules/errors.md` · `rules/security.md` · `rules/i18n.md` · `rules/config.md` · `rules/tests.md` · `rules/sf-cli.md` · `rules/verification.md` · `rules/readme.md`
 
 ---
 
@@ -133,35 +136,35 @@ All commands below are Claude Code skills invocable with `/`:
 
 ### Generation pipeline
 
-| Command                 | Skill                          | Action                                       |
-| ----------------------- | ------------------------------ | -------------------------------------------- |
-| `/vscode-app`           | `skills/vscode-app/`           | Start / resume / maintenance menu            |
-| `/vscode-p1-scoping`    | `skills/vscode-p1-scoping/`    | Scoping - parameters (tests, webview, i18n, sf, icon) |
-| `/vscode-p2-featuring`  | `skills/vscode-p2-featuring/`  | Extension name + features (MoSCoW) + v1.0 scope + locked sizing |
-| `/vscode-p3-surfaces`  | `skills/vscode-p3-surfaces/`  | Surfaces & UX - contribution points          |
-| `/vscode-p4-architect`  | `skills/vscode-p4-architect/`  | Locked architectural contract                |
-| `/vscode-p5-development`| `skills/vscode-p5-development/`| Batch delivery + `.vsix` packaging           |
+| Command                  | Skill                           | Action                                                          |
+| ------------------------ | ------------------------------- | --------------------------------------------------------------- |
+| `/vscode-app`            | `skills/vscode-app/`            | Start / resume / maintenance menu                               |
+| `/vscode-p1-scoping`     | `skills/vscode-p1-scoping/`     | Scoping - parameters (tests, webview, i18n, sf, icon)           |
+| `/vscode-p2-featuring`   | `skills/vscode-p2-featuring/`   | Extension name + features (MoSCoW) + v1.0 scope + locked sizing |
+| `/vscode-p3-surfaces`    | `skills/vscode-p3-surfaces/`    | Surfaces & UX - contribution points                             |
+| `/vscode-p4-architect`   | `skills/vscode-p4-architect/`   | Locked architectural contract                                   |
+| `/vscode-p5-development` | `skills/vscode-p5-development/` | Batch delivery + `.vsix` packaging                              |
 
 ### Post-delivery maintenance
 
-| Command       | Skill                | Action                                                  |
-| ------------- | -------------------- | ------------------------------------------------------- |
-| `/vscode-trace-feature`   | `skills/vscode-trace-feature/`   | Trace a feature across the model/controller/view layers, report |
-| `/vscode-add-feature`     | `skills/vscode-add-feature/`     | Add a feature to a delivered extension (contract-compliant) |
-| `/vscode-fix-issue`       | `skills/vscode-fix-issue/`       | Fix a bug - decision tree, root cause                   |
-| `/vscode-refactor-code`   | `skills/vscode-refactor-code/`   | Refactor under explicit validation only                 |
-| `/vscode-run-tests`       | `skills/vscode-run-tests/`       | Run executable verification (typecheck, lint, build, package) |
+| Command                 | Skill                          | Action                                                          |
+| ----------------------- | ------------------------------ | --------------------------------------------------------------- |
+| `/vscode-trace-feature` | `skills/vscode-trace-feature/` | Trace a feature across the model/controller/view layers, report |
+| `/vscode-add-feature`   | `skills/vscode-add-feature/`   | Add a feature to a delivered extension (contract-compliant)     |
+| `/vscode-fix-issue`     | `skills/vscode-fix-issue/`     | Fix a bug - decision tree, root cause                           |
+| `/vscode-refactor-code` | `skills/vscode-refactor-code/` | Refactor under explicit validation only                         |
+| `/vscode-run-tests`     | `skills/vscode-run-tests/`     | Run executable verification (typecheck, lint, build, package)   |
 
 ### State / utilities
 
-| Command            | Skill                     | Action                                          |
-| ------------------ | ------------------------- | ----------------------------------------------- |
-| `/vscode-load-project`    | `skills/vscode-load-project/`    | Load an existing delivered project              |
-| `/vscode-generate-readme` | `skills/vscode-generate-readme/` | Generate the README.md of an existing project   |
-| `/vscode-save-session`    | `skills/vscode-save-session/`    | Generate the session save file                  |
-| `/vscode-show-state`      | `skills/vscode-show-state/`      | Current project state                           |
-| `/vscode-show-contract`   | `skills/vscode-show-contract/`   | Validated contract tree                         |
-| `/vscode-save-memory`     | `skills/vscode-save-memory/`     | Memorize an error, decision, or preference      |
+| Command                   | Skill                            | Action                                        |
+| ------------------------- | -------------------------------- | --------------------------------------------- |
+| `/vscode-load-project`    | `skills/vscode-load-project/`    | Load an existing delivered project            |
+| `/vscode-generate-readme` | `skills/vscode-generate-readme/` | Generate the README.md of an existing project |
+| `/vscode-save-session`    | `skills/vscode-save-session/`    | Generate the session save file                |
+| `/vscode-show-state`      | `skills/vscode-show-state/`      | Current project state                         |
+| `/vscode-show-contract`   | `skills/vscode-show-contract/`   | Validated contract tree                       |
+| `/vscode-save-memory`     | `skills/vscode-save-memory/`     | Memorize an error, decision, or preference    |
 
 ---
 
@@ -186,9 +189,9 @@ Which command(s) to run for a given intent. The **generation pipeline** (p1→p5
 
 Canonical source of the calibration. Skills refer to it - do not duplicate this table elsewhere.
 
-| Size          | Files    | Features        | Batches (no tests) | Batches (with tests) |
-| ------------- | -------- | --------------- | ------------------ | -------------------- |
-| Small         | < 10     | ≤ 5             | 3                  | 4                    |
-| Medium / Large| ≥ 10     | > 5             | 4                  | 5                    |
+| Size           | Files | Features | Batches (no tests) | Batches (with tests) |
+| -------------- | ----- | -------- | ------------------ | -------------------- |
+| Small          | < 10  | ≤ 5      | 3                  | 4                    |
+| Medium / Large | ≥ 10  | > 5      | 4                  | 5                    |
 
 The extra batch corresponds to the test suite + dev dependencies (see `rules/tests.md`). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files/features and count toward the size.

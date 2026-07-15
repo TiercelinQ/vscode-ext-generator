@@ -56,16 +56,16 @@ vscode/
 
 ## Spécificités vs les autres générateurs
 
-| Apport                        | Détail                                                                          |
-| ----------------------------- | ------------------------------------------------------------------------------- |
-| **Thème natif**               | Aucune palette, aucun design-system. Les surfaces VS Code suivent le thème utilisateur automatiquement. |
-| **Surfaces (Phase 3)**        | La phase « design » devient « surfaces & UX » : choix des contribution points (commandes, vues arbre, status bar, menus, webview). |
-| **Rôle par skill**            | Chaque skill ouvre sur un persona ciblé (Role / Goal / Deliverable).            |
-| **Specs persistées**          | Phases 1→4 écrivent `docs/specs/01-scoping.md` … `04-architect.md`.             |
-| **Contrat = source de vérité**| `docs/specs/04-architect.md` relu par load-project, show-contract, add-feature, refactor-code. |
-| **Intégration Salesforce CLI**| Option opt-in : runner `sf --json` + helpers typés + Org Manager (tree view), auth orchestrée via `sf`. |
-| **Vérification exécutable**   | `rules/verification.md` : typecheck, lint, build esbuild, package vsce — échec bloquant. |
-| **Mémoire native**            | `/vscode-save-memory` écrit dans la mémoire native Claude Code + `MEMORY.md`.   |
+| Apport                         | Détail                                                                                                                             |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Thème natif**                | Aucune palette, aucun design-system. Les surfaces VS Code suivent le thème utilisateur automatiquement.                            |
+| **Surfaces (Phase 3)**         | La phase « design » devient « surfaces & UX » : choix des contribution points (commandes, vues arbre, status bar, menus, webview). |
+| **Rôle par skill**             | Chaque skill ouvre sur un persona ciblé (Role / Goal / Deliverable).                                                               |
+| **Specs persistées**           | Phases 1→4 écrivent `docs/specs/01-scoping.md` … `04-architect.md`.                                                                |
+| **Contrat = source de vérité** | `docs/specs/04-architect.md` relu par load-project, show-contract, add-feature, refactor-code.                                     |
+| **Intégration Salesforce CLI** | Option opt-in : runner `sf --json` + helpers typés + Org Manager (tree view), auth orchestrée via `sf`.                            |
+| **Vérification exécutable**    | `rules/verification.md` : typecheck, lint, build esbuild, package vsce — échec bloquant.                                           |
+| **Mémoire native**             | `/vscode-save-memory` écrit dans la mémoire native Claude Code + `MEMORY.md`.                                                      |
 
 ---
 
@@ -152,13 +152,13 @@ La prise en charge est confirmée en un bloc au format unifié : `Project loaded
 
 ### Maintenance (`/vscode-app → 4`)
 
-| Besoin                          | Commande      |
-| ------------------------------- | ------------- |
-| Ajouter une fonctionnalité      | `/vscode-add-feature`   |
-| Comprendre / tracer le code     | `/vscode-trace-feature`     |
-| Corriger un bug                 | `/vscode-fix-issue`         |
-| Restructurer (sous validation)  | `/vscode-refactor-code`    |
-| Vérifier le build / lancer les checks | `/vscode-run-tests`  |
+| Besoin                                | Commande                |
+| ------------------------------------- | ----------------------- |
+| Ajouter une fonctionnalité            | `/vscode-add-feature`   |
+| Comprendre / tracer le code           | `/vscode-trace-feature` |
+| Corriger un bug                       | `/vscode-fix-issue`     |
+| Restructurer (sous validation)        | `/vscode-refactor-code` |
+| Vérifier le build / lancer les checks | `/vscode-run-tests`     |
 
 `/vscode-add-feature` suit un protocole à diff contractuel : cadrage léger (4 questions), diff du contrat (fichiers créés/modifiés, points de contribution — ids `src/constants.ts`, manifeste `package.json`, activationEvents —, tests), **validation explicite avant écriture**, livraison en un lot unique (`Feature [name] — [N files]`), puis mise à jour de `docs/specs/04-architect.md`.
 
@@ -192,6 +192,7 @@ npm run package              # vsce package → .vsix
 ## Intégration Salesforce CLI (option)
 
 Activée en Phase 1 (recommandée automatiquement si l'objectif mentionne Salesforce, Apex, org, SOQL, etc.). Le scaffold par défaut fournit :
+
 - `src/models/sf-cli.ts` : runner `sf … --json` (`spawn` args array, parse défensif de l'enveloppe) + helpers typés (`listOrgs`, `setDefaultOrg`, `loginWeb`, `logout`, `reconnect`, `query`, `queryTooling`, `deploy`, `retrieve`, `runApex`).
 - Un **Org Manager** : vue arbre listant les orgs (statut connecté/déconnecté, org par défaut) avec commandes add / remove / reconnect / set-default / refresh.
 - Auth orchestrée : l'extension pilote `sf org login/logout`, `sf` possède le flow OAuth et les tokens (keychain). L'extension ne manipule jamais de token.
@@ -210,25 +211,25 @@ Après correction (`/vscode-fix-issue` ou Phase 5), Claude produit un bilan de n
 
 ## Commandes de référence
 
-| Commande                | Modèle | Action                                               |
-| ----------------------- | ------ | ---------------------------------------------------- |
-| `/vscode-app`           | Haiku  | Menu démarrage / reprise / maintenance               |
-| `/vscode-p1-scoping`    | Sonnet | Scoping — paramètres + engine floor                  |
-| `/vscode-p2-featuring`  | Sonnet | Fiche besoins                                        |
-| `/vscode-p3-surfaces`  | Sonnet | Surfaces & UX (contribution points)                  |
-| `/vscode-p4-architect`  | Sonnet | Contrat architectural verrouillé                     |
-| `/vscode-p5-development`| Sonnet | Livraison par lots + packaging .vsix                 |
-| `/vscode-add-feature`   | Sonnet | Ajouter une feature à un projet livré                |
-| `/vscode-trace-feature` | Sonnet | Tracer une fonctionnalité à travers les couches      |
-| `/vscode-fix-issue`     | Sonnet | Corriger un bug — cause racine                       |
-| `/vscode-refactor-code` | Sonnet | Restructurer sous validation                         |
-| `/vscode-run-tests`     | Sonnet | Vérification exécutable                               |
-| `/vscode-load-project`  | Sonnet | Charger un projet existant                           |
-| `/vscode-generate-readme`| Sonnet | Générer README.md d'un projet existant              |
-| `/vscode-save-session`  | Haiku  | Sauvegarder la session                               |
-| `/vscode-show-state`    | Haiku  | État courant                                         |
-| `/vscode-show-contract` | Haiku  | Contrat architectural validé                         |
-| `/vscode-save-memory`   | Haiku  | Persister dans la mémoire native                     |
+| Commande                  | Modèle | Action                                          |
+| ------------------------- | ------ | ----------------------------------------------- |
+| `/vscode-app`             | Haiku  | Menu démarrage / reprise / maintenance          |
+| `/vscode-p1-scoping`      | Sonnet | Scoping — paramètres + engine floor             |
+| `/vscode-p2-featuring`    | Sonnet | Fiche besoins                                   |
+| `/vscode-p3-surfaces`     | Sonnet | Surfaces & UX (contribution points)             |
+| `/vscode-p4-architect`    | Sonnet | Contrat architectural verrouillé                |
+| `/vscode-p5-development`  | Sonnet | Livraison par lots + packaging .vsix            |
+| `/vscode-add-feature`     | Sonnet | Ajouter une feature à un projet livré           |
+| `/vscode-trace-feature`   | Sonnet | Tracer une fonctionnalité à travers les couches |
+| `/vscode-fix-issue`       | Sonnet | Corriger un bug — cause racine                  |
+| `/vscode-refactor-code`   | Sonnet | Restructurer sous validation                    |
+| `/vscode-run-tests`       | Sonnet | Vérification exécutable                         |
+| `/vscode-load-project`    | Sonnet | Charger un projet existant                      |
+| `/vscode-generate-readme` | Sonnet | Générer README.md d'un projet existant          |
+| `/vscode-save-session`    | Haiku  | Sauvegarder la session                          |
+| `/vscode-show-state`      | Haiku  | État courant                                    |
+| `/vscode-show-contract`   | Haiku  | Contrat architectural validé                    |
+| `/vscode-save-memory`     | Haiku  | Persister dans la mémoire native                |
 
 ---
 
