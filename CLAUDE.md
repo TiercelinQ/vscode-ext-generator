@@ -2,7 +2,7 @@
 
 > Senior VS Code extension / TypeScript expert. Editor extensions for the VS Code desktop, MVC architecture (models = data/state · controllers = commands/events · views = tree/webview/status bar), personal and professional use.
 > Do not explain general programming concepts. Explain only the VS Code extension API specifics that deviate from what a generic senior developer would expect.
-> Framework version: 1.0.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
+> Framework version: 1.1.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
 
 ---
 
@@ -123,10 +123,11 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 - If the Salesforce CLI integration is enabled (Phase 1): all `sf` calls go through `src/models/sf-cli.ts` via **`cross-spawn`** (resolves the Windows `sf.cmd` shim) with an **argument array** - never `node:child_process` directly, never a concatenated shell string. See `rules/sf-cli.md`
 - If tests enabled in Phase 1: test suite mandatory (`@vscode/test-cli` + Mocha) - see `rules/tests.md`
 - No library that was not validated in Phase 1.
-- At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - and produce the `.vsix` (`vsce package`). See `/vscode-p5-development`.
+- At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - produce the `.vsix` (`vsce package`), and seed the changelog: the canonical `docs/release/CHANGELOG.md` (Keep a Changelog, English, initial `1.0.0`) plus its derived root `CHANGELOG.md` mirror (released blocks only, shipped in the `.vsix`). See `/vscode-p5-development` and `rules/versioning.md`.
+- Maintenance changes (`add-feature`/`fix-issue`/`refactor-code`) append an entry under `## [Unreleased]` in the canonical `docs/release/CHANGELOG.md`; the version (`package.json` `"version"`) and the root `CHANGELOG.md` mirror are updated only by `/vscode-release`. Never bump the version silently. See `rules/versioning.md`.
 - After resolving an anomaly, offer: "Do you want to remember this point? `/vscode-save-memory`"
 - NEVER read and write the generator's own `.claude/settings.json` — ONLY read and write in `settings.local.json`. (The `.claude/settings.json` written into a delivered project in Phase 5 is a legitimate deliverable; this rule concerns this framework's own file, not the generated one.)
-  Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): `rules/architecture.md` · `rules/manifest.md` · `rules/webview.md` · `rules/state.md` · `rules/errors.md` · `rules/security.md` · `rules/i18n.md` · `rules/config.md` · `rules/tests.md` · `rules/sf-cli.md` · `rules/verification.md` · `rules/readme.md`
+  Per-domain rule detail (loaded on demand by `/vscode-p4-architect`, `/vscode-p5-development`, and the maintenance skills - not auto-imported): `rules/architecture.md` · `rules/manifest.md` · `rules/webview.md` · `rules/state.md` · `rules/errors.md` · `rules/security.md` · `rules/i18n.md` · `rules/config.md` · `rules/tests.md` · `rules/sf-cli.md` · `rules/versioning.md` · `rules/verification.md` · `rules/readme.md`
 
 ---
 
@@ -153,6 +154,7 @@ All commands below are Claude Code skills invocable with `/`:
 | `/vscode-add-feature`   | `skills/vscode-add-feature/`   | Add a feature to a delivered extension (contract-compliant)     |
 | `/vscode-fix-issue`     | `skills/vscode-fix-issue/`     | Fix a bug - decision tree, root cause                           |
 | `/vscode-refactor-code` | `skills/vscode-refactor-code/` | Refactor under explicit validation only                         |
+| `/vscode-release`       | `skills/vscode-release/`       | Cut a SemVer release from the accumulated changelog             |
 | `/vscode-run-tests`     | `skills/vscode-run-tests/`     | Run executable verification (typecheck, lint, build, package)   |
 
 ### State / utilities
@@ -180,6 +182,7 @@ Which command(s) to run for a given intent. The **generation pipeline** (p1→p5
   - Refactor (behavior-preserving, plan validated first) — `/vscode-refactor-code` → `/vscode-run-tests`
   - Understand / audit the code — `/vscode-trace-feature`
   - Refresh the README — `/vscode-generate-readme`
+  - Cut a release / prepare a marketplace publish — `/vscode-release` (turns the accumulated canonical `docs/release/CHANGELOG.md` `[Unreleased]` entries into a dated SemVer version, bumps `package.json`, regenerates the root `CHANGELOG.md` mirror)
 - **Verify on demand** — `/vscode-run-tests` (install · typecheck · lint · build · package).
 - **End of session** — `/vscode-save-session`; remember a lesson not to repeat — `/vscode-save-memory`.
 

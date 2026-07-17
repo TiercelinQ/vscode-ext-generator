@@ -77,11 +77,13 @@ my-extension/
 │   ├── launch.json               # F5 → Extension Development Host
 │   └── tasks.json                # esbuild watch task
 ├── README.md
-├── CHANGELOG.md
+├── CHANGELOG.md                  # derived mirror (released blocks) for vsce/marketplace — ships in the .vsix — @rules/versioning.md
 ├── l10n/                         # bundle.l10n.json runtime strings (if i18n) — @rules/i18n.md
 ├── media/                        # webview assets (if webview): main.css, main.js, codicon.css
 ├── resources/                    # extension icon (128px png)
-├── docs/specs/                   # generation specs (user's language): 01-scoping … 04-architect
+├── docs/
+│   ├── release/CHANGELOG.md      # canonical changelog ([Unreleased] + released) — excluded from the .vsix — @rules/versioning.md
+│   └── specs/                    # generation specs (user's language): 01-scoping … 04-architect
 └── src/
     ├── extension.ts              # activate()/deactivate() — composition root
     ├── constants.ts              # command ids, view ids, config keys (as const)

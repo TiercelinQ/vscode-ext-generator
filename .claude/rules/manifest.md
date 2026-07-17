@@ -107,7 +107,7 @@ eslint.config.mjs
 .vscode-test.mjs
 ```
 
-Ship `dist/`, `package.json`, `package.nls*.json`, `l10n/`, `media/`, `resources/`, `README.md`, `CHANGELOG.md`, `LICENSE`. **Exclude `node_modules/**`**: esbuild bundles every dependency into `dist/extension.js`, so shipping `node_modules` would only bloat the `.vsix` with already-bundled code.
+Ship `dist/`, `package.json`, `package.nls*.json`, `l10n/`, `media/`, `resources/`, `README.md`, `CHANGELOG.md`, `LICENSE`. The shipped `CHANGELOG.md` is the **root** file — a **derived mirror** (released blocks only) required by vsce/marketplace; the **canonical** changelog is `docs/release/CHANGELOG.md`, which is excluded here (`docs/**`) and never ships. The mirror is regenerated from the canonical at each release (`@rules/versioning.md`). **Exclude `node_modules/**`**: esbuild bundles every dependency into `dist/extension.js`, so shipping `node_modules` would only bloat the `.vsix` with already-bundled code.
 
 ## Anti-patterns — what NOT to do
 

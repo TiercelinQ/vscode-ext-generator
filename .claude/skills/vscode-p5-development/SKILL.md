@@ -21,7 +21,7 @@ The full project source on disk + `README.md` + verified build + `.vsix`.
 
 ## Code rules
 
-At start, read and fully apply: `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/i18n.md` (if i18n) · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if sf) · `@rules/tests.md` (if tests) · `@rules/verification.md` (not auto-imported). **If a webview is in scope, read `webview-ui.md`** before producing any webview UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
+At start, read and fully apply: `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/i18n.md` (if i18n) · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if sf) · `@rules/tests.md` (if tests) · `@rules/versioning.md` · `@rules/verification.md` (not auto-imported). **If a webview is in scope, read `webview-ui.md`** before producing any webview UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
 
 Critical reminders:
 - ESLint clean · Prettier · TypeScript strict · TSDoc on classes and public API.
@@ -55,7 +55,11 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 
 ## Last batch — mandatory extra deliverables
 
-- `package.json` finalized (identity, `engines.vscode` floor + matching `@types/vscode`, `contributes`, `main`, scripts), `esbuild.js`, `tsconfig.json`, `eslint.config.mjs`, `.prettierrc`, `.vscodeignore`, `.vscode/launch.json` + `.vscode/tasks.json` (F5 debug), a `LICENSE` file and a minimal `CHANGELOG.md` (`# Change Log` + a `## 1.0.0` initial-release entry — `vsce package` warns without either, and both ship in the `.vsix` per `@rules/manifest.md`), and `package.nls*.json` + `l10n/` if i18n.
+- `package.json` finalized (identity, `engines.vscode` floor + matching `@types/vscode`, `contributes`, `main`, scripts), `esbuild.js`, `tsconfig.json`, `eslint.config.mjs`, `.prettierrc`, `.vscodeignore`, `.vscode/launch.json` + `.vscode/tasks.json` (F5 debug), a `LICENSE` file, the root `CHANGELOG.md` mirror (see the versioning bullet below — `vsce package` warns without a `LICENSE` or a `CHANGELOG.md`; both ship in the `.vsix` per `@rules/manifest.md`), and `package.nls*.json` + `l10n/` if i18n.
+- **Changelog + version (canonical + root mirror)** per `@rules/versioning.md` — **in English**, Keep a Changelog shape. Write **two** files:
+  - **`docs/release/CHANGELOG.md`** — the **canonical** source of truth (create `docs/release/`): the preamble, an empty `## [Unreleased]`, and the initial `## [1.0.0] - <YYYY-MM-DD>` block with `### Added` / `- Initial release.`. Later releases are cut with `/vscode-release`.
+  - **`CHANGELOG.md`** at the extension root — the **derived mirror** required by vsce/marketplace: the released blocks only (no `## [Unreleased]`), regenerated from the canonical. At initial delivery it holds the single `## [1.0.0] - <YYYY-MM-DD>` block. `.vscodeignore` excludes `docs/**`, so this root file is what SHIPS in the `.vsix` and renders on the marketplace page.
+  The `1.0.0` in both files matches the extension version in `package.json` `"version"`.
 - Install and run instructions:
   ```
   npm install
@@ -73,7 +77,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   # [nom-extension]
 
   ## Origin
-  Framework: vscode v1.0.0
+  Framework: vscode v1.1.0
 
   ## Business context
   [What the extension does — synthesized from docs/specs/02-featuring.md: objective + key features]
@@ -81,7 +85,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   ## Deviations from the framework
   - None
   ```
-  `[nom-extension]` = `displayName`. The version is the one declared at the top of the framework `CLAUDE.md` (currently 1.0.0). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
+  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.1.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
 - **`.claude/settings.json`** written at the generated project root so the extension stays self-enforced in later maintenance sessions:
 
   ```json

@@ -20,7 +20,7 @@ npm run package              # vsce package — produces the .vsix (last batch /
 
 Rules:
 - A non-zero exit or any reported error is a failure → fix the root cause, do not silence the rule. Re-run until clean.
-- **`vsce package`** may warn about a missing `repository`, `LICENSE`, or `CHANGELOG` — address or acknowledge; it must still produce the `.vsix`.
+- **`vsce package`** may warn about a missing `repository`, `LICENSE`, or `CHANGELOG` — address or acknowledge; it must still produce the `.vsix`. The root `CHANGELOG.md` (the derived mirror, `@rules/versioning.md`) is what satisfies the CHANGELOG warning and ships in the `.vsix`.
 - **Functional smoke** (cannot be a shell command): launch the Extension Development Host (F5) and confirm the extension activates, the contributed commands run, and the views render. State this step explicitly to the user when the env cannot drive it.
 - If Node/npm is **not** available in the environment, say so explicitly, fall back to the static checks below, and tell the user which commands they must run themselves before considering the work verified. Never claim a clean typecheck you could not run.
 - Quote the relevant command output as proof when reporting completion.
@@ -46,12 +46,14 @@ Rules:
 11. Architectural contract (`docs/specs/04-architect.md`) respected — every file, command/view id, and library matches the locked contract, or a declared+validated deviation exists.
 12. Webview (if any): zero hardcoded color/size, only `--vscode-*` tokens, strict CSP + nonce (`webview-ui.md`); layout from the closed landmark set (`header/nav/main/aside/footer`) via `grid-template-areas`, a single `<main>`, matching the skeleton locked in the Phase 4 contract.
 13. i18n keys: all used, none missing — `package.nls*.json` (manifest) + `l10n/bundle.l10n*.json` (runtime), if enabled.
-14. `docs/specs/` present and consistent with the delivered code. `.vscodeignore` excludes sources/tests/specs.
+14. `docs/specs/` present and consistent with the delivered code. `.vscodeignore` excludes sources/tests/specs (incl. `docs/**`, so the canonical `docs/release/CHANGELOG.md` never ships — the root `CHANGELOG.md` mirror does).
+15. Changelog present in both required forms (`@rules/versioning.md`): the canonical `docs/release/CHANGELOG.md` (Keep a Changelog, English, with `## [Unreleased]`) **and** the derived root `CHANGELOG.md` mirror (released blocks only, no `[Unreleased]`). The top released version of `docs/release/CHANGELOG.md` == `package.json` `"version"` == the top block of the root `CHANGELOG.md` (all three agree).
 
 ### Per-domain (conditional — see the matching rule for detail)
 - **state** (`@rules/state.md`): keys in `constants.ts`; access via the wrappers; secrets only in `SecretStorage`; change listeners disposed.
 - **sf-cli** (`@rules/sf-cli.md`): all calls via `sf-cli.ts` `spawn` args array; `sf` presence detected; no token stored/logged; Org Manager commands validate + refresh.
 - **tests** (`@rules/tests.md`): if enabled, `.vscode-test.mjs` present, `pretest` compiles to `out/`, `npm test` exit 0, dev deps present.
+- **versioning** (`@rules/versioning.md`): the canonical `docs/release/CHANGELOG.md` present and English; the derived root `CHANGELOG.md` mirror present (released blocks only, no `[Unreleased]`); top released version == `package.json` `"version"` == the root mirror's top block; maintenance changes recorded under `[Unreleased]` in the canonical file only, in the right category; after `/vscode-release`, `[Unreleased]` reset empty, the cut block carries the right version + date, and the root mirror regenerated from the canonical.
 
 ---
 

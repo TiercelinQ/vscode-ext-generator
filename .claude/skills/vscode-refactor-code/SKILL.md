@@ -25,7 +25,7 @@ A validated plan, then the refactored files on disk + a passing verification + a
 
 ## Steps
 
-1. **Load context**: `docs/specs/04-architect.md`, then `@rules/architecture.md` · `@rules/security.md` · `@rules/state.md` (not auto-imported); `webview-ui.md` if webview UI is involved; `@rules/sf-cli.md` if the refactor touches `sf-cli.ts` / the sf controllers (consult `sf-cli-reference/` by section to keep every command/flag intact — a refactor preserves behavior, so no command/flag may drift).
+1. **Load context**: `docs/specs/04-architect.md`, then `@rules/architecture.md` · `@rules/security.md` · `@rules/state.md` · `@rules/versioning.md` (not auto-imported); `webview-ui.md` if webview UI is involved; `@rules/sf-cli.md` if the refactor touches `sf-cli.ts` / the sf controllers (consult `sf-cli-reference/` by section to keep every command/flag intact — a refactor preserves behavior, so no command/flag may drift).
 
 2. **Diagnose** what is actually wrong: duplication, a view doing business logic, a god-controller, a model creating UI, a hardcoded id bypassing `constants.ts`, a state access bypassing the wrappers, a hardcoded value bypassing a `--vscode-*` token in a webview. Anchor each finding to `file:line`.
 
@@ -38,6 +38,8 @@ A validated plan, then the refactored files on disk + a passing verification + a
 5. **Apply** only after validation. Minimum diff. Respect the layers, the contract, and `@rules/security.md`.
 
 6. **Verify**: `@rules/verification.md §A` — behavior unchanged, typecheck/lint/build clean. If the structure changed (new shared file, moved code, renamed command/view id), update `docs/specs/04-architect.md`, regenerate the README (`@rules/readme.md`), and keep the constants ↔ contributes ↔ handlers chain consistent end-to-end.
+
+7. **Changelog**: append a `### Changed` entry under `## [Unreleased]` in the **canonical** `docs/release/CHANGELOG.md` (`@rules/versioning.md`) — in English, one line describing the internal restructuring, no version bump (the bump happens at `/vscode-release`; a refactor infers PATCH). Edit only the canonical file; the root `CHANGELOG.md` mirror is regenerated at release. If the file is absent (legacy extension), skip silently and suggest `/vscode-load-project`. Skip if the refactor is trivially invisible (e.g. renamed a local variable).
 
 ## Anti-patterns — what NOT to do
 - **Do not** refactor without a validated plan, ever.

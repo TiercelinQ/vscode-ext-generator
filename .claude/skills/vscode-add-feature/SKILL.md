@@ -25,7 +25,7 @@ If the project root has not been provided in this flow, first ask: `Project root
 
 If no contract is known: stop and ask for `/vscode-load-project`.
 
-**Load context**: read `docs/specs/04-architect.md` (locked contract), then `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/config.md` · `@rules/security.md` · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if the Salesforce CLI integration is on) · `@rules/verification.md` (not auto-imported). Read `webview-ui.md` on demand before any webview UI change. For an `sf`-related change, consult the matching `sf-cli-reference/` section file before writing any command/flag.
+**Load context**: read `docs/specs/04-architect.md` (locked contract), then `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/config.md` · `@rules/security.md` · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if the Salesforce CLI integration is on) · `@rules/versioning.md` · `@rules/verification.md` (not auto-imported). Read `webview-ui.md` on demand before any webview UI change. For an `sf`-related change, consult the matching `sf-cli-reference/` section file before writing any command/flag.
 
 ## Step 1 — Light feature scoping
 
@@ -70,7 +70,7 @@ Produce (in the user's language):
 ## Step 3 — Application — strict rules
 
 - Read `webview-ui.md` (not auto-imported) before any webview UI change.
-- Fully respect `@rules/architecture.md`, `@rules/manifest.md`, `@rules/state.md`, `@rules/errors.md`, `@rules/config.md`, `@rules/security.md`, `@rules/webview.md` (if webview), `@rules/sf-cli.md` (if the Salesforce CLI integration is on), `@rules/i18n.md` (if i18n), `@rules/tests.md`, `@rules/verification.md`, `@rules/readme.md`.
+- Fully respect `@rules/architecture.md`, `@rules/manifest.md`, `@rules/state.md`, `@rules/errors.md`, `@rules/config.md`, `@rules/security.md`, `@rules/webview.md` (if webview), `@rules/sf-cli.md` (if the Salesforce CLI integration is on), `@rules/i18n.md` (if i18n), `@rules/tests.md`, `@rules/versioning.md`, `@rules/verification.md`, `@rules/readme.md`.
 - No modification not listed in the validated diff. No opportunistic improvement of adjacent code.
 - Implementation across the layers (a new feature usually touches model + controller + view + manifest):
   - Model: business logic / state access via the wrappers (`storage.ts`, `secrets.ts`, `configuration.ts`); raise named errors (`models/errors.ts`) or return `Result<T>`.
@@ -88,6 +88,16 @@ Single batch for the feature:
 Feature [name] — [N files]
 
 Deliver each created/modified file as a complete block, written to disk. If tests requested: deliver in the same batch, at the end.
+
+## Step 4b — Changelog entry
+
+After the feature is delivered, append an entry under `## [Unreleased]` in the **canonical** `docs/release/CHANGELOG.md` (`@rules/versioning.md`) — **in English**, no version bump:
+- `### Added` — the new capability, one concise line (add a `### Changed` line too if it alters existing behavior).
+- If the change is backward-incompatible (a command/setting removed, a contribution id renamed, the `engines.vscode` floor raised), mark it `**BREAKING:**` (drives a MAJOR at release).
+- Edit **only** the canonical `docs/release/CHANGELOG.md`; do **not** touch the root `CHANGELOG.md` mirror — it is regenerated from the canonical at `/vscode-release`, not per operation.
+- If `docs/release/CHANGELOG.md` is absent (extension predates the system), skip silently and suggest `/vscode-load-project` to initialize it.
+
+Do **not** bump the version — that happens at `/vscode-release`. Mention it once, at the end: the change is recorded under `[Unreleased]`; run `/vscode-release` when ready to cut a version.
 
 ## Step 5 — Anomaly
 

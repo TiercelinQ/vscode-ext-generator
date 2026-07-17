@@ -37,9 +37,12 @@ Entities detected: [list]
 Webview: [hub | per-feature | none]
 Tests : [present ([N] files) | absent]
 Salesforce CLI: [enabled (sf v2 runner) | disabled]
+Changelog: [present (top vX.Y.Z, [N] unreleased entries) | absent (init offered)]
 Specs: [docs/specs present: yes/no]
 
 Generator rules applied. Ready for: development · fixes · improvements · adjustments.
 
-5. Read and apply all rules (`CLAUDE.md`, `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/verification.md`, + `@rules/webview.md`/`webview-ui.md` if webview, `@rules/sf-cli.md` if sf, `@rules/tests.md` if tests present) to any later change. The `@rules/*` are not auto-imported: read them before any code change.
+4b. **Changelog / versioning check (retroactive init).** Look for the canonical `docs/release/CHANGELOG.md`. If **present**, read the top released version and count the `## [Unreleased]` entries for the confirmation block. If **absent** (extension predates the versioning system), propose **once**, right after the confirmation block: initialize it with a seed following `@rules/versioning.md`. Read the current version from `package.json` `"version"`. Create the canonical `docs/release/CHANGELOG.md` (create `docs/release/`) with the Keep a Changelog preamble, an empty `## [Unreleased]`, and a `## [<current-version>] - <YYYY-MM-DD>` block. **If a root `CHANGELOG.md` already exists** (common — vsce/marketplace require it), seed the canonical **from it**: carry its released blocks into `docs/release/CHANGELOG.md` (add the `[Unreleased]` section above them); if it has no meaningful history, note the baseline (`### Added` / `- Baseline (changelog started).`). Leave the root `CHANGELOG.md` as the derived mirror (do not add `[Unreleased]` to it). Proposed, not imposed; if the user declines, do not re-propose (only on explicit request).
+
+5. Read and apply all rules (`CLAUDE.md`, `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/versioning.md` · `@rules/verification.md`, + `@rules/webview.md`/`webview-ui.md` if webview, `@rules/sf-cli.md` if sf, `@rules/tests.md` if tests present) to any later change. The `@rules/*` are not auto-imported: read them before any code change.
 6. Any structural or security deviation detected between the code and the rules (or vs `docs/specs/04-architect.md`): report it, do not fix without a request (hand off to `/vscode-fix-issue` or `/vscode-refactor-code`).

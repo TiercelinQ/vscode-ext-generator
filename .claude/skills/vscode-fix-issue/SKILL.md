@@ -57,7 +57,8 @@ Read `webview-ui.md` on demand if the fix touches webview UI (not auto-imported)
 3. **Ask: "knowing what I know now, what is the clean fix?"** Implement that, not the quickest patch. If the clean fix is larger than expected, say so before applying.
 4. Apply the minimum correct change. Respect the layers, the contract (`docs/specs/04-architect.md`), and the security rules.
 5. **Verify**: re-run `@rules/verification.md §A` for the affected area (and the F5 smoke if relevant); confirm the targeted failure is gone and nothing else broke. Then apply `@rules/readme.md` — if the fix changed a README-documented aspect (a contribution point, a dependency, a prerequisite), regenerate the README.
-6. If it took several attempts: produce the **cleanup report** (`@rules/architecture.md` — list every dead element added during failed attempts), then offer `Do you want to remember this point? /vscode-save-memory`.
+6. **Changelog**: append a `### Fixed` entry under `## [Unreleased]` in the **canonical** `docs/release/CHANGELOG.md` (`@rules/versioning.md`) — in English, one concise line, no version bump (the bump happens at `/vscode-release`). Edit only the canonical file; the root `CHANGELOG.md` mirror is regenerated at release, not per fix. If the file is absent (legacy extension), skip silently and suggest `/vscode-load-project` to initialize it. Skip for a non-code fix with no user-visible effect (e.g. a doc typo).
+7. If it took several attempts: produce the **cleanup report** (`@rules/architecture.md` — list every dead element added during failed attempts), then offer `Do you want to remember this point? /vscode-save-memory`.
 
 ## Anti-patterns — what NOT to do
 - **Do not** silence a typecheck/lint finding with `as any` / `// eslint-disable` instead of fixing the cause.
