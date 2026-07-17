@@ -20,7 +20,7 @@ A structured prompt system that generates complete, marketplace-ready VS Code ex
 
 Each phase writes a spec in the user's language to `docs/specs/` (`01-scoping` … `04-architect`); the contract is the source of truth.
 
-**Maintenance commands**: `/vscode-add-feature` (add a feature, contract-compliant — explicit contract-diff validation before writing), `/vscode-trace-feature` (trace behavior), `/vscode-fix-issue` (root-cause debugging with a decision tree), `/vscode-refactor-code` (validated, behavior-preserving), `/vscode-run-tests` (executable verification). Plus `/vscode-load-project` (unified take-over confirmation) and `/vscode-generate-readme` to load/document existing extensions. Session resume is handled by `/vscode-app` (option 2 or a pasted SESSION block).
+**Maintenance commands**: `/vscode-add-feature` (add a feature, contract-compliant — explicit contract-diff validation before writing), `/vscode-trace-feature` (trace behavior), `/vscode-fix-issue` (root-cause debugging with a decision tree), `/vscode-refactor-code` (validated, behavior-preserving), `/vscode-release` (cut a SemVer release from the accumulated changelog), `/vscode-run-tests` (executable verification). Plus `/vscode-load-project` (unified take-over confirmation) and `/vscode-generate-readme` to load/document existing extensions. Session resume is handled by `/vscode-app` (option 2 or a pasted SESSION block).
 
 Every generated extension follows the same MVC architecture, native VS Code theming, and security rules (webview CSP + nonce, validated input, secrets in `SecretStorage`).
 
@@ -93,6 +93,7 @@ Then in Claude Code:
 | `/vscode-trace-feature` | Trace a feature across the layers                  |
 | `/vscode-fix-issue`     | Fix a bug - decision tree, root cause              |
 | `/vscode-refactor-code` | Refactor under explicit validation only            |
+| `/vscode-release`       | Cut a SemVer release from the accumulated changelog |
 | `/vscode-run-tests`     | Executable verification (typecheck, lint, build, package) |
 | `/vscode-load-project`  | Load an existing project from its specs/README     |
 | `/vscode-generate-readme`| Generate README.md for an existing project        |
@@ -111,8 +112,10 @@ my-extension/
 ├── esbuild.js · tsconfig.json · eslint.config.mjs · .prettierrc · .vscodeignore
 ├── .vscode/launch.json · tasks.json   # F5 debug
 ├── README.md
+├── CHANGELOG.md                   # vsce/marketplace mirror (derived)
 ├── CLAUDE.md                      # Extension identity (origin, business context, deviations)
 ├── .claude/settings.json          # Guardrails + lint hook (self-enforced)
+├── docs/release/CHANGELOG.md      # SemVer changelog (Keep a Changelog), canonical source
 ├── docs/specs/                    # Generation specs (user's language): 01-scoping … 04-architect
 ├── l10n/ · package.nls*.json      # i18n (if enabled)
 ├── media/                         # webview assets (if webview)
@@ -124,6 +127,12 @@ my-extension/
     ├── controllers/              # command handlers, event handlers, webview router
     └── views/                    # TreeDataProvider · status bar · webview provider
 ```
+
+---
+
+## Versioning & changelog
+
+Every generated extension carries a SemVer version and a changelog at `docs/release/CHANGELOG.md` (Keep a Changelog format, written in English). Maintenance skills (`add-feature`, `fix-issue`, `refactor-code`) accumulate entries under `## [Unreleased]`; `/vscode-release` freezes them into a dated version block and bumps the version source (`package.json` version) plus the root `CHANGELOG.md` mirror required by vsce/marketplace (the canonical source stays `docs/release/CHANGELOG.md`; `docs/**` is excluded from the `.vsix`). The version is never bumped silently. See `rules/versioning.md`.
 
 ---
 
