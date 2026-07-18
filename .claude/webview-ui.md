@@ -134,6 +134,10 @@ A **closed vocabulary** of semantic landmarks. Each maps to one grid area; these
 - `<section>` — a titled, thematic group.
 - `<article>` — a self-contained, **repeatable** unit (a card, a record). Typically what a message-driven list renders.
 
+### Data table (inside `<main>`)
+
+When a feature renders tabular data in the webview, use a semantic `<table>` inside `<main>` (or a `<section>`), styled with `--vscode-*` tokens (flat, `border-radius: 0`). **Columns are sortable ascending and descending**: each sortable `<th>` is clickable (or wraps a `<button>`); a click sorts by that column, a second click reverses the direction. Reflect the state with `aria-sort="ascending" | "descending"` and a codicon `chevron-up` / `chevron-down` indicator on the active column (none on the others). One sort column at a time; the ordering runs in the webview script over the host-provided rows (no business logic beyond ordering — the host stays the source of the data). A single-column list of items is a native `TreeView`, not a webview table; its ordering is a `TreeDataProvider` concern, outside this reference.
+
 ### Skeletons (pick one, or compose)
 
 Arrange the Level-1 regions with CSS grid. Canonical skeletons:
@@ -163,6 +167,7 @@ main   { grid-area: main; overflow: auto; }
 
 - **Compose** beyond the table only from the same five landmarks (declare an explicit `grid-template-areas`). No other top-level region.
 - Gaps/sizing via `--space-*`; separators via `--vscode-panel-border`; surfaces via `--vscode-editor-background` / `--vscode-sideBar-background`. Flat (`border-radius: 0`).
+- **Nav / aside labels word-wrap** within the `minmax(160px, 240px)` column (`overflow-wrap: anywhere; white-space: normal`) so long entries stay fully visible — never truncate or ellipsize. (Native tree views are themed by VS Code and are not styled here.)
 - Header/aside layouts breathe better in a **WebviewPanel** (editor tab) than in a narrow docked **WebviewView** — see `@rules/webview.md`.
 - **Multiple webviews** (the *one-tab-per-feature* hosting model, `@rules/webview.md`): each gets its own region map + skeleton, locked per webview in the Phase 4 contract; file convention in `@rules/architecture.md`.
 - **Hub** hosting model (one webview for several features): the `<nav>` region switches between feature views — each view is a `section`/`article` set inside `main`, the host posts the active view. A single region map + skeleton covers all the hub's views.

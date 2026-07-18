@@ -1,6 +1,6 @@
 ---
 name: vscode-p1-scoping
-description: Phase 1 of the VS Code extension generation cycle — scoping in grouped questions (i18n, tests, webview, Salesforce CLI, icon), engine floor announcement, calibration announcement, and writing of the scoping spec.
+description: Phase 1 of the VS Code extension generation cycle — scoping in grouped questions (i18n, tests, webview, a conditional Salesforce CLI opt-in shown only when the objective mentions Salesforce, icon), engine floor announcement, calibration announcement, and writing of the scoping spec.
 model: sonnet
 ---
 
@@ -35,13 +35,13 @@ Start with the objective, then establish the project root (folder name → locat
 
 ### Closed parameters
 
-> **Salesforce detection (before call 1)** — scan the objective text for the Salesforce cluster: `Salesforce`, `sf`/`sf CLI`, `org`, `scratch org`, `sandbox`, `Apex`, `SOQL`/`SOSL`, `sObject`, `metadata`/`deploy`/`retrieve`, `package`/`2GP`, `permission set`, `Dev Hub`, `Agentforce`. If any term is present, the **Salesforce CLI integration** question below switches its recommended default to `Yes` with a one-line rationale ("the objective mentions Salesforce"). The user still confirms — they may keep `No` (e.g. an extension that only references Salesforce without driving `sf`). The single resolved Yes/No governs both `@rules/sf-cli.md` and the `sf-cli-reference/` catalog (gate `@rules/sf-cli.md`).
+> **Salesforce detection (before call 1)** — scan the objective text for the Salesforce cluster: `Salesforce`, `sf`/`sf CLI`, `org`, `scratch org`, `sandbox`, `Apex`, `SOQL`/`SOSL`, `sObject`, `metadata`/`deploy`/`retrieve`, `package`/`2GP`, `permission set`, `Dev Hub`, `Agentforce`. The **Salesforce CLI integration** question below is asked **only when at least one term matched**: if it matched, include that question in call 1 with its recommended default set to `Yes` and a one-line rationale ("the objective mentions Salesforce"); the user still confirms and may keep `No` (e.g. an extension that only references Salesforce without driving `sf`). **If no term matched, omit the Salesforce question entirely** — the integration stays off (call 1 then carries only i18n, tests, and webview), and the user can still enable it later by asking explicitly. The single resolved Yes/No governs both `@rules/sf-cli.md` and the `sf-cli-reference/` catalog (gate `@rules/sf-cli.md`).
 
-2. **`AskUserQuestion` — call 1** (4 questions, each with a recommended option):
+2. **`AskUserQuestion` — call 1** (3 questions, plus a 4th only when the Salesforce detection above matched):
    - **FR/EN i18n** (FR default): `No` (recommended, unless a real EN need) · `Yes`. — `package.nls.json` + `vscode.l10n` (`@rules/i18n.md`).
    - **Automated tests** (`@vscode/test-cli` + Mocha): `Yes` (recommended, pro use) · `No`.
    - **Webview UI**: `No` (recommended — native surfaces cover most needs) · `Yes`. If `Yes`, the binding reference `webview-ui.md` applies and the build adds a webview entry. A webview is only for UI that a tree view / quick pick / settings cannot express.
-   - **Salesforce CLI integration** (`sf` v2): default `No` (general-purpose extension) — but **flip the recommended option to `Yes` when the Salesforce detection above matched** (state the rationale). If `Yes`, `@rules/sf-cli.md` applies (it routes to the `sf-cli-reference/` command catalog) and the default scaffold adds the `sf` runner + typed helpers + a starter Org Manager (tree view). `sf` becomes a runtime prerequisite (detected); the official Salesforce pack stays an optional recommendation, not a hard dependency.
+   - **Salesforce CLI integration** (`sf` v2) — **included only when the Salesforce detection above matched** (otherwise this question is omitted and the integration stays off, reachable later on explicit request). When shown, the recommended option is `Yes` (rationale: the objective mentions Salesforce); the user may still keep `No` (e.g. an extension that only references Salesforce without driving `sf`). If `Yes`, `@rules/sf-cli.md` applies (it routes to the `sf-cli-reference/` command catalog) and the default scaffold adds the `sf` runner + typed helpers + a starter Org Manager (tree view). `sf` becomes a runtime prerequisite (detected); the official Salesforce pack stays an optional recommendation, not a hard dependency.
 3. **`AskUserQuestion` — call 2** (1 question):
    - **Extension icon**: `No` (recommended — VS Code default, can be added later) · `Yes`. If `Yes`, ask the `.png` path (128px+) as free-form text.
 
