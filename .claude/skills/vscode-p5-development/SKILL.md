@@ -84,6 +84,12 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 
   ## Deviations from the framework
   - None
+
+  ## Maintenance
+  - Load the project first: `/vscode-load-project`
+  - Change it: `/vscode-add-feature` · `/vscode-fix-issue` · `/vscode-refactor-code` (each records the change under `[Unreleased]` in `docs/release/CHANGELOG.md`; the version does not move)
+  - Verify: `/vscode-run-tests`
+  - Publish a version: `/vscode-release` (turns the accumulated `[Unreleased]` changelog into a dated version and raises the version number)
   ```
   `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.1.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
 - **`.claude/settings.json`** written at the generated project root so the extension stays self-enforced in later maintenance sessions:
@@ -124,6 +130,8 @@ Once the last batch (plus the test batch if any) is delivered, close Phase 5 wit
   ```
   (+ `npm test` if tests enabled. `vsce publish` / `ovsx publish` to distribute — on the user's decision.)
   (+ the `sf` CLI must be installed if the Salesforce integration is on.)
+
+- **Maintenance & release** — after delivery: `/vscode-load-project` first, then `/vscode-add-feature` · `/vscode-fix-issue` · `/vscode-refactor-code` to change it, `/vscode-run-tests` to verify, and `/vscode-release` to publish a version (it turns the accumulated `[Unreleased]` changelog into a dated version and raises the number). The same reminder is recorded in the generated `CLAUDE.md`.
 
 The summary points to the documents; it does not restate them.
 
