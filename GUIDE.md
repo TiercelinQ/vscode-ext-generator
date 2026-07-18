@@ -11,6 +11,7 @@ vscode/
 ├── CLAUDE.md                 # Instructions core (EN) · persona · communication · index commandes · calibrage
 ├── GUIDE.md                  # Ce fichier
 ├── README.md                 # Présentation du repo (EN)
+├── CHANGELOG.md              # Changelog du générateur (distinct de celui des extensions générées)
 ├── LICENSE
 └── .claude/
     ├── webview-ui.md         # UNIQUE référence visuelle (tokens --vscode-*, CSP+nonce, codicons, squelettes de layout/régions) — chargée à la demande si webview
@@ -55,7 +56,7 @@ vscode/
 
 ---
 
-## Spécificités vs les autres générateurs
+## Spécificités de ce framework
 
 | Apport                         | Détail                                                                                                                             |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -213,6 +214,8 @@ Les commandes et flags `sf` ne sont jamais inventés : le générateur s'appuie 
 
 Après correction (`/vscode-fix-issue` ou Phase 5), Claude produit un bilan de nettoyage puis propose `Veux-tu mémoriser ce point ? /vscode-save-memory`. `/vscode-save-memory` catégorise et écrit dans la **mémoire native Claude Code** (+ `MEMORY.md`).
 
+Prérequis : la mémoire auto doit être activée (`/config → Memory → Enable auto memory → On`). Sans cette activation, `/vscode-save-memory` formule les notes mais ne les persiste pas entre sessions.
+
 ---
 
 ## Commandes de référence
@@ -237,6 +240,36 @@ Après correction (`/vscode-fix-issue` ou Phase 5), Claude produit un bilan de n
 | `/vscode-show-state`      | Haiku  | État courant                                    |
 | `/vscode-show-contract`   | Haiku  | Contrat architectural validé                    |
 | `/vscode-save-memory`     | Haiku  | Persister dans la mémoire native                |
+
+---
+
+## Structure d'une extension générée
+
+```
+my-extension/
+├── package.json              # Manifeste : engines.vscode, contributes, scripts
+├── package.nls.json          # i18n du manifeste (si i18n) — + package.nls.fr.json
+├── esbuild.js                # Bundler → dist/extension.js
+├── tsconfig.json · eslint.config.mjs · .prettierrc · .vscodeignore
+├── .vscode/                  # launch.json (F5) + tasks.json
+├── CHANGELOG.md              # Miroir racine dérivé (versions publiées, exigé par vsce)
+├── README.md
+├── l10n/                     # bundle.l10n*.json (si i18n)
+├── media/                    # Assets webview (si webview) : main.css, main.js
+├── resources/                # Icône d'extension (128px)
+├── docs/
+│   ├── release/CHANGELOG.md  # Changelog canonique ([Unreleased] + versions)
+│   └── specs/                # 01-scoping.md … 04-architect.md (langue utilisateur)
+└── src/
+    ├── extension.ts          # activate()/deactivate() — composition root
+    ├── constants.ts          # Ids commandes/vues/settings (as const)
+    ├── types.ts              # Result<T>, DTOs, union de messages webview
+    ├── models/               # storage.ts · secrets.ts · configuration.ts · errors.ts · [entity].model.ts (+ sf-cli.ts si sf)
+    ├── controllers/          # index.ts (registerAll) + [entity].controller.ts
+    └── views/                # [entity]-tree.ts · status-bar.ts · webview/ (si webview)
+```
+
+Détail des rôles et des lots de livraison : `.claude/rules/architecture.md`.
 
 ---
 

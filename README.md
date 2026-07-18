@@ -89,7 +89,7 @@ Then in Claude Code:
 | `/vscode-p3-surfaces`  | Surfaces - contribution points + UX                |
 | `/vscode-p4-architect`  | Architect - locked architecture contract           |
 | `/vscode-p5-development`| Auto-chained batch delivery + `.vsix`              |
-| `/vscode-add-feature`   | Add a feature to a shipped extension               |
+| `/vscode-add-feature`   | Add a feature to a shipped extension (contract diff first) |
 | `/vscode-trace-feature` | Trace a feature across the layers                  |
 | `/vscode-fix-issue`     | Fix a bug - decision tree, root cause              |
 | `/vscode-refactor-code` | Refactor under explicit validation only            |
@@ -148,7 +148,7 @@ Every generated extension carries a SemVer version and a changelog at `docs/rele
 - `.claude/webview-ui.md` - the only visual reference (webview `--vscode-*` tokens, CSP + nonce)
 - `.claude/sf-cli-reference/` - `sf` v2 command/flag catalog (`INDEX.md` + 8 capability files), the source of truth for sf commands — consulted by section when the Salesforce integration is on
 - `.claude/rules/` - domain rules:
-  - `architecture.md` · `manifest.md` · `webview.md` · `state.md` · `errors.md` · `security.md` · `i18n.md` · `config.md` · `tests.md` · `sf-cli.md` · `verification.md` · `readme.md`
+  - `architecture.md` · `manifest.md` · `webview.md` · `state.md` · `errors.md` · `security.md` · `i18n.md` · `config.md` · `tests.md` · `sf-cli.md` · `readme.md` · `versioning.md`
   - `verification.md` - single source of truth for executable + static checks
 
 ---

@@ -63,6 +63,7 @@ Example for Phase 2 (renders as a heading + two lines, not a fenced block):
 - Progress map: completed phases marked `✓`, the current phase marked `▶`, upcoming phases plain. These are **intentional progress markers** (not decorative - the no-emoji rule does not strip them).
 - Render every phase label and intent in the user's language.
 - **Start-of-flow overview (once)**: at the very start of Phase 1 (new extension), first list the 5 phases with their intent, then show the Phase 1/5 banner.
+- **Skill slug ↔ phase label**: the skill names carry the pipeline verb, the banner shows the user-facing label — `vscode-p2-featuring` → **Features**, `vscode-p4-architect` → **Architecture**. The other three match by name (`p1-scoping` → Scoping, `p3-surfaces` → Surfaces, `p5-development` → Development).
 
 ---
 

@@ -10,6 +10,9 @@ dist/
 out/
 *.vsix
 
+# Local work plan
+tasks/
+
 # Logs
 logs/
 *.log
