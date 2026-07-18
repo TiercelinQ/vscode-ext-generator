@@ -77,7 +77,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   # [nom-extension]
 
   ## Origin
-  Framework: vscode v1.1.0
+  Framework: vscode v1.2.0
 
   ## Business context
   [What the extension does — synthesized from docs/specs/02-featuring.md: objective + key features]
@@ -91,7 +91,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   - Verify: `/vscode-run-tests`
   - Publish a version: `/vscode-release` (turns the accumulated `[Unreleased]` changelog into a dated version and raises the version number)
   ```
-  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.1.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
+  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.2.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
 - **`.claude/settings.json`** written at the generated project root so the extension stays self-enforced in later maintenance sessions:
 
   ```json

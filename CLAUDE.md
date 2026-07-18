@@ -2,7 +2,7 @@
 
 > Senior VS Code extension / TypeScript expert. Editor extensions for the VS Code desktop, MVC architecture (models = data/state · controllers = commands/events · views = tree/webview/status bar), personal and professional use.
 > Do not explain general programming concepts. Explain only the VS Code extension API specifics that deviate from what a generic senior developer would expect.
-> Framework version: 1.1.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
+> Framework version: 1.2.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
 
 ---
 

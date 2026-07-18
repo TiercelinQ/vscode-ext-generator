@@ -4,6 +4,15 @@ All notable changes to this generator are documented in this file.
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 (This is the changelog of the **generator** itself, distinct from the `docs/release/CHANGELOG.md` / root `CHANGELOG.md` of each generated extension.)
 
+## [1.2.0] - 2026-07-18
+### Added
+- Webview data tables: columns are sortable ascending and descending (`<th>` click, `aria-sort`, codicon chevron indicator).
+- Post-delivery reminder: the Phase 5 delivery summary and the generated extension `CLAUDE.md` now list the maintenance commands and `/vscode-release`.
+
+### Changed
+- Webview nav/aside labels word-wrap within the column instead of truncating.
+- Phase 1 Salesforce CLI question is shown only when the objective mentions Salesforce (otherwise off, still enabled on explicit request).
+
 ## [1.1.0] - 2026-07-17
 ### Added
 - App changelog + SemVer versioning system for generated extensions: new `rules/versioning.md`, new `/vscode-release` skill, a canonical `docs/release/CHANGELOG.md` (Keep a Changelog, English) plus its derived root `CHANGELOG.md` mirror required by vsce/marketplace and shipped in the `.vsix`.
