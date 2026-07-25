@@ -165,10 +165,6 @@ La prise en charge est confirmée en un bloc au format unifié : `Project loaded
 
 `/vscode-add-feature` suit un protocole à diff contractuel : cadrage léger (4 questions), diff du contrat (fichiers créés/modifiés, points de contribution — ids `src/constants.ts`, manifeste `package.json`, activationEvents —, tests), **validation explicite avant écriture**, livraison en un lot unique (`Feature [name] — [N files]`), puis mise à jour de `docs/specs/04-architect.md`.
 
-### Versioning & changelog
-
-Chaque extension générée porte une version SemVer et un changelog `docs/release/CHANGELOG.md` (format Keep a Changelog, rédigé en anglais). Les skills de maintenance (`add-feature`, `fix-issue`, `refactor-code`) accumulent leurs entrées sous `## [Unreleased]` ; `/vscode-release` les fige en un bloc de version daté et incrémente la source de version (`package.json`) ainsi que le miroir racine `CHANGELOG.md` exigé par vsce/marketplace (la source canonique reste `docs/release/CHANGELOG.md` ; `docs/**` est exclu du `.vsix`). La version n'est jamais incrémentée en silence. Voir `rules/versioning.md`.
-
 ---
 
 ## Vérification exécutable
@@ -270,6 +266,10 @@ my-extension/
 ```
 
 Détail des rôles et des lots de livraison : `.claude/rules/architecture.md`.
+
+### Versioning & changelog
+
+Chaque extension générée porte une version SemVer et un changelog `docs/release/CHANGELOG.md` (format Keep a Changelog, rédigé en anglais). Les skills de maintenance (`add-feature`, `fix-issue`, `refactor-code`) accumulent leurs entrées sous `## [Unreleased]` ; `/vscode-release` les fige en un bloc de version daté et incrémente la source de version (`package.json`) ainsi que le miroir racine `CHANGELOG.md` exigé par vsce/marketplace (la source canonique reste `docs/release/CHANGELOG.md` ; `docs/**` est exclu du `.vsix`). La version n'est jamais incrémentée en silence. Voir `rules/versioning.md`.
 
 ---
 

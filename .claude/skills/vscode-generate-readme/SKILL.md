@@ -26,7 +26,7 @@ Use the native Claude Code tools (no shell — Windows-compatible):
    - Read `package.json` (the manifest: `engines`, `contributes`, `activationEvents`, scripts), `src/constants.ts`, `src/types.ts`, `src/extension.ts`, `src/models/`, `src/controllers/`, `src/views/`.
    - Detect tests via `Glob` `src/test/**/*.test.ts`.
    - When specs and code disagree, the code is what shipped — describe the code and note the divergence.
-2. Generate `README.md` at the root via `Write`. Write the README in English (public-facing Marketplace document) — see `rules/readme.md`:
+2. Generate `README.md` at the root via `Write`. Write the README in English (public-facing Marketplace document) — see `@rules/readme.md`:
 
 ```markdown
 # [APP_NAME] — v[VERSION]

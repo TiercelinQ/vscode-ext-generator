@@ -26,12 +26,6 @@ Every generated extension follows the same MVC architecture, native VS Code them
 
 ---
 
-## Native theming, not a design system
-
-VS Code themes every native surface (commands, tree views, status bar, quick picks, menus) automatically — so this generator has **no** design-system or layout file and **no** palette to choose. The only styled surface is an optional webview, and even then the UI uses the `--vscode-*` CSS variables and the `body.vscode-dark/light/high-contrast` classes: it follows the user's active theme with zero extra code. A webview can still have structure (header, aside, footer) via a bounded set of semantic layout skeletons — structure only, styling stays token-driven and flat, so the result still looks native. The single visual reference is `.claude/webview-ui.md`, loaded only when a webview is in scope.
-
----
-
 ## Generated extension stack
 
 | Element        | Value                                                       |
@@ -133,6 +127,12 @@ my-extension/
 ## Versioning & changelog
 
 Every generated extension carries a SemVer version and a changelog at `docs/release/CHANGELOG.md` (Keep a Changelog format, written in English). Maintenance skills (`add-feature`, `fix-issue`, `refactor-code`) accumulate entries under `## [Unreleased]`; `/vscode-release` freezes them into a dated version block and bumps the version source (`package.json` version) plus the root `CHANGELOG.md` mirror required by vsce/marketplace (the canonical source stays `docs/release/CHANGELOG.md`; `docs/**` is excluded from the `.vsix`). The version is never bumped silently. See `rules/versioning.md`.
+
+---
+
+## Native theming, not a design system
+
+VS Code themes every native surface (commands, tree views, status bar, quick picks, menus) automatically — so this generator has **no** design-system or layout file and **no** palette to choose. The only styled surface is an optional webview, and even then the UI uses the `--vscode-*` CSS variables and the `body.vscode-dark/light/high-contrast` classes: it follows the user's active theme with zero extra code. A webview can still have structure (header, aside, footer) via a bounded set of semantic layout skeletons — structure only, styling stays token-driven and flat, so the result still looks native. The single visual reference is `.claude/webview-ui.md`, loaded only when a webview is in scope.
 
 ---
 
