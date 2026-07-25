@@ -72,7 +72,8 @@ my-extension/
 ├── tsconfig.json
 ├── eslint.config.mjs · .prettierrc
 ├── esbuild.js                    # bundler → dist/extension.js — @rules/config.md
-├── .vscodeignore                 # files excluded from the .vsix
+├── .gitignore                    # repo hygiene (delivered last batch) — @rules/config.md
+├── .vscodeignore                 # files excluded from the .vsix (distinct from .gitignore) — @rules/manifest.md
 ├── .vscode/
 │   ├── launch.json               # F5 → Extension Development Host
 │   └── tasks.json                # esbuild watch task
@@ -139,7 +140,7 @@ export function deactivate(): void {}
 | ----- | -------------------------------------------------------------------------------------------------- |
 | 1     | `src/constants.ts` + `src/types.ts` + `src/models/` (storage, secrets, configuration, errors, entity models, `sf-cli.ts` if enabled) |
 | 2     | `src/controllers/` + `src/views/` (tree, status bar, webview provider + `media/` if webview)       |
-| 3     | `src/extension.ts` + `package.json` (manifest/contributes) + `esbuild.js` + tsconfig + eslint + `.vscode/` + `.vscodeignore` + `l10n`/`nls` (if i18n) + README + `CLAUDE.md` + `.claude/settings.json` + packaging instructions |
+| 3     | `src/extension.ts` + `package.json` (manifest/contributes) + `esbuild.js` + tsconfig + eslint + `.vscode/` + `.gitignore` + `.vscodeignore` + `l10n`/`nls` (if i18n) + README + `CLAUDE.md` + `.claude/settings.json` + packaging instructions |
 
 **Medium / Large project (4 batches):**
 
@@ -148,7 +149,7 @@ export function deactivate(): void {}
 | 1     | `src/constants.ts` + `src/types.ts` + `src/models/`                                                |
 | 2     | `src/views/`                                                                                        |
 | 3     | `src/controllers/`                                                                                  |
-| 4     | `src/extension.ts` + `package.json` + `esbuild.js` + configs + `.vscode/` + `l10n`/`nls` (if i18n) + README + `CLAUDE.md` + `.claude/settings.json` + packaging |
+| 4     | `src/extension.ts` + `package.json` + `esbuild.js` + configs + `.vscode/` + `.gitignore` + `.vscodeignore` + `l10n`/`nls` (if i18n) + README + `CLAUDE.md` + `.claude/settings.json` + packaging |
 
 ### Tests batch (only if Phase 1 tests = Yes)
 Add a final dedicated batch — `src/test/` (`@vscode/test-cli` + Mocha) + `.vscode-test.mjs` + dev dependencies + the `"test"` script. → Small 4 batches / Medium-Large 5 batches. Patterns: `@rules/tests.md`.

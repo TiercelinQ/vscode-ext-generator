@@ -56,6 +56,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 ## Last batch — mandatory extra deliverables
 
 - `package.json` finalized (identity, `engines.vscode` floor + matching `@types/vscode`, `contributes`, `main`, scripts), `esbuild.js`, `tsconfig.json`, `eslint.config.mjs`, `.prettierrc`, `.vscodeignore`, `.vscode/launch.json` + `.vscode/tasks.json` (F5 debug), a `LICENSE` file, the root `CHANGELOG.md` mirror (see the versioning bullet below — `vsce package` warns without a `LICENSE` or a `CHANGELOG.md`; both ship in the `.vsix` per `@rules/manifest.md`), and `package.nls*.json` + `l10n/` if i18n.
+- **`.gitignore`** written at the project root — template in `@rules/config.md §.gitignore` (a **different** file from `.vscodeignore`, which governs the `.vsix`). Keeps `node_modules/`, the anchored build outputs (`/out/`, `/dist/`), `*.vsix`, `tasks/`, `.claude/settings.local.json` + `.claude/agent-memory/`, and the private `docs/specs/` out of the repo, while **never** ignoring `docs/release/CHANGELOG.md`, the root `CHANGELOG.md` mirror, `.claude/settings.json`, the generated `CLAUDE.md`, `.vscode/` (launch.json + tasks.json — F5 debug), `test/`/`tests/`, or `scripts/`.
 - **Changelog + version (canonical + root mirror)** per `@rules/versioning.md` — **in English**, Keep a Changelog shape. Write **two** files:
   - **`docs/release/CHANGELOG.md`** — the **canonical** source of truth (create `docs/release/`): the preamble, an empty `## [Unreleased]`, and the initial `## [1.0.0] - <YYYY-MM-DD>` block with `### Added` / `- Initial release.`. Later releases are cut with `/vscode-release`.
   - **`CHANGELOG.md`** at the extension root — the **derived mirror** required by vsce/marketplace: the released blocks only (no `## [Unreleased]`), regenerated from the canonical. At initial delivery it holds the single `## [1.0.0] - <YYYY-MM-DD>` block. `.vscodeignore` excludes `docs/**`, so this root file is what SHIPS in the `.vsix` and renders on the marketplace page.
@@ -77,7 +78,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   # [nom-extension]
 
   ## Origin
-  Framework: vscode v1.2.0
+  Framework: vscode v1.3.0
 
   ## Business context
   [What the extension does — synthesized from docs/specs/02-featuring.md: objective + key features]
@@ -91,7 +92,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   - Verify: `/vscode-run-tests`
   - Publish a version: `/vscode-release` (turns the accumulated `[Unreleased]` changelog into a dated version and raises the version number)
   ```
-  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.2.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
+  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.3.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
 - **`.claude/settings.json`** written at the generated project root so the extension stays self-enforced in later maintenance sessions:
 
   ```json

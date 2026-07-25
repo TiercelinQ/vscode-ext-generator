@@ -174,6 +174,43 @@ export default tseslint.config(
 - File: `resources/icon.png`, 128×128 min. Referenced by `package.json` `"icon"`.
 - If the user provides no icon in Phase 1: omit `"icon"` (VS Code shows a default), noted in the generated README.
 
+## `.gitignore`
+
+Delivered at the project root in the last batch (`@rules/architecture.md` batch table · `/vscode-p5-development`). Single source of truth for what stays **out of the repo**. Comments in English (the authoring language). **Not** the same file as `.vscodeignore` (`@rules/manifest.md`), which controls what ships **inside the `.vsix`** — the two are complementary, never interchangeable. Socle common to every stack + the VS Code build additions on top:
+
+```gitignore
+# --- Dependencies & build --------------------------------------------------
+node_modules/
+/out/
+/dist/
+*.vsix
+
+# --- Claude Code -----------------------------------------------------------
+# Personal, never committed.
+.claude/settings.local.json
+.claude/agent-memory/
+# NOTE: .claude/settings.json IS a delivered asset — do NOT ignore it.
+
+# Local work plan — never committed.
+tasks/
+
+# Private specs. Only the published changelog is committed.
+docs/*
+!docs/release/
+docs/release/*
+!docs/release/CHANGELOG.md
+
+# OS noise.
+.DS_Store
+Thumbs.db
+desktop.ini
+```
+
+- **Build outputs are anchored** (`/out/`, `/dist/`) — the leading slash confines the pattern to the repo root, so a nested folder of the same name is not swept. `*.vsix` keeps packaged artifacts out.
+- **`.vscode/` is NOT ignored** — `.vscode/launch.json` + `.vscode/tasks.json` are delivered assets that wire the F5 → Extension Development Host debug launch (`## .vscode/ — debug` above). The template contains **no** `.vscode/` pattern.
+- **Never ignored** (delivered assets): `docs/release/CHANGELOG.md` (the negated pattern above), the **root `CHANGELOG.md` mirror** (required by vsce — it ships in the `.vsix` and renders on the marketplace page, `@rules/manifest.md`), `.claude/settings.json`, the generated root `CLAUDE.md`, `.vscode/` (above), `test/`/`tests/`, and `scripts/`.
+- Verify the template with `git add -A` + `git status`, **not** only `git check-ignore` — the negation rules make `check-ignore` misleading.
+
 ## Anti-patterns — what NOT to do
 
 - **Do not** bundle `vscode` (always `external`), or bundle the webview script into the extension bundle.

@@ -13,7 +13,7 @@ VS Code extensions have a hard constraint: `vsce` warns without a `CHANGELOG.md`
 
 - The **canonical** file (`docs/release/CHANGELOG.md`, create `docs/release/` if absent) is where entries accumulate and where `/vscode-release` cuts a version. It is the single source of truth for the release history.
 - The **root mirror** (`CHANGELOG.md`) is **regenerated from the canonical** at every release: the same released blocks, **without** the `## [Unreleased]` section (a marketplace changelog only shows released versions). Never hand-edit the mirror — it is derived output.
-- **Written in English**, both files, regardless of the user's language — the changelog is a deploy artifact and the marketplace page is public. (Specs and README stay in the user's language; the changelog does not.)
+- **Written in English**, both files, regardless of the user's language — the changelog is a deploy artifact and the marketplace page is public. (Specs stay in the user's language; the README and the changelog are English.)
 - Format: **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/)** + **[Semantic Versioning](https://semver.org/spec/v2.0.0.html)** for both files.
 
 Canonical seed written at generation (Phase 5), `docs/release/CHANGELOG.md`:

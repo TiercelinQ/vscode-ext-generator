@@ -4,6 +4,14 @@ All notable changes to this generator are documented in this file.
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 (This is the changelog of the **generator** itself, distinct from the `docs/release/CHANGELOG.md` / root `CHANGELOG.md` of each generated extension.)
 
+## [1.3.0] - 2026-07-25
+### Added
+- Generated extensions now ship a root `.gitignore` template (socle + VS Code build additions `node_modules/`, `/out/`, `/dist/`, `*.vsix`): new `## .gitignore` section in `rules/config.md`, wired into the `rules/architecture.md` tree and batch tables, the `p5-development` last-batch deliverables, and `rules/verification.md` (new cross-file check). Keeps `.vscode/` (F5 launch/tasks) and the root `CHANGELOG.md` mirror committed; kept distinct from `.vscodeignore`.
+- README language requirement made explicit: the generated `README.md` is always English (public-facing Marketplace document, alongside the changelog) — new `## Language — English` section in `rules/readme.md` + the write step in `vscode-generate-readme`.
+
+### Changed
+- `rules/versioning.md`: corrected the language note now that the README is English (Specs stay in the user's language; the README and the changelog are English).
+
 ## [1.2.0] - 2026-07-18
 ### Added
 - Webview data tables: columns are sortable ascending and descending (`<th>` click, `aria-sort`, codicon chevron indicator).

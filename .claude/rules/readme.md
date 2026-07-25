@@ -2,6 +2,10 @@
 
 > The generated extension's `README.md` is a **derived** document — its source of truth is the code plus `docs/specs/04-architect.md`. After any post-delivery change, the README must keep reflecting what shipped. This is the single, shared definition of when and how to refresh it. Referenced by `/vscode-add-feature`, `/vscode-fix-issue`, `/vscode-refactor-code`.
 
+## Language — English
+
+**Language — English.** The generated `README.md` is always written in English, regardless of the user's interface language. It is the public-facing entry document (rendered on the Marketplace page, alongside the changelog). Specs under `docs/specs/` stay in the user's language; the README does not.
+
 ## What the README documents
 
 objective · features · stack & dependencies · file tree · contribution points (commands, views, settings, keybindings) · activation · state/storage · prerequisites (incl. the `sf` CLI if the Salesforce integration is on) · installation & run (F5, build, `vsce package`).
