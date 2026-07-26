@@ -111,6 +111,7 @@ my-extension/
 ├── .claude/settings.json          # Guardrails + lint hook (self-enforced)
 ├── docs/release/CHANGELOG.md      # SemVer changelog (Keep a Changelog), canonical source
 ├── docs/specs/                    # Generation specs (user's language): 01-scoping … 04-architect
+├── docs/sessions/SESSION_<Ext>_S0.md  # Delivery baseline session (auto, end of Phase 5)
 ├── l10n/ · package.nls*.json      # i18n (if enabled)
 ├── media/                         # webview assets (if webview)
 ├── resources/                     # extension icon

@@ -24,6 +24,9 @@ Use the native Claude Code tools (Windows-compatible):
 
 1. **Create** the `docs/sessions/` folder at the project root if it does not exist.
 2. Determine `[N]`: list `docs/sessions/SESSION_*_S*.md` via `Glob`, extract the integers (`S(\d+)\.md$`), `[N] = max + 1` (or `1` if none). `[app_name]` = exact extension `name` from `package.json` (no spaces; the Phase 2 name if the manifest is not delivered yet).
+
+> `S0` is reserved for the delivery baseline written automatically at the end of Phase 5 (`/vscode-p5-development`). Manual saves therefore start at `S1` — the `max + 1` rule above already yields `1` when only `S0` exists.
+
 3. **Write** `docs/sessions/SESSION_[app_name]_S[N].md` via `Write`:
 
 # SESSION_S[N] — [APP_NAME] · [completed phase]

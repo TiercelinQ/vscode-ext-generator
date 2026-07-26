@@ -4,6 +4,10 @@ All notable changes to this generator are documented in this file.
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 (This is the changelog of the **generator** itself, distinct from the `docs/release/CHANGELOG.md` / root `CHANGELOG.md` of each generated extension.)
 
+## [1.4.0] - 2026-07-26
+### Added
+- Phase 5 now writes the delivery baseline session file `docs/sessions/SESSION_<Ext>_S0.md` automatically at the end of the last batch (`/vscode-save-session` template, `N = 0`, overwritten if Phase 5 is replayed). Manual `/vscode-save-session` saves keep numbering from `S1`. The delivery summary links it; `.vscodeignore` already keeps `docs/**` out of the `.vsix`.
+
 ## [1.3.0] - 2026-07-25
 ### Added
 - Generated extensions now ship a root `.gitignore` template (socle + VS Code build additions `node_modules/`, `/out/`, `/dist/`, `*.vsix`): new `## .gitignore` section in `rules/config.md`, wired into the `rules/architecture.md` tree and batch tables, the `p5-development` last-batch deliverables, and `rules/verification.md` (new cross-file check). Keeps `.vscode/` (F5 launch/tasks) and the root `CHANGELOG.md` mirror committed; kept distinct from `.vscodeignore`.

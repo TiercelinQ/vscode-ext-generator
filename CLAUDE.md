@@ -2,7 +2,7 @@
 
 > Senior VS Code extension / TypeScript expert. Editor extensions for the VS Code desktop, MVC architecture (models = data/state · controllers = commands/events · views = tree/webview/status bar), personal and professional use.
 > Do not explain general programming concepts. Explain only the VS Code extension API specifics that deviate from what a generic senior developer would expect.
-> Framework version: 1.3.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
+> Framework version: 1.4.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
 
 ---
 
@@ -124,7 +124,7 @@ The generation pipeline writes a persisted spec file per phase into `docs/specs/
 - If the Salesforce CLI integration is enabled (Phase 1): all `sf` calls go through `src/models/sf-cli.ts` via **`cross-spawn`** (resolves the Windows `sf.cmd` shim) with an **argument array** - never `node:child_process` directly, never a concatenated shell string. See `rules/sf-cli.md`
 - If tests enabled in Phase 1: test suite mandatory (`@vscode/test-cli` + Mocha) - see `rules/tests.md`
 - No library that was not validated in Phase 1.
-- At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - produce the `.vsix` (`vsce package`), and seed the changelog: the canonical `docs/release/CHANGELOG.md` (Keep a Changelog, English, initial `1.0.0`) plus its derived root `CHANGELOG.md` mirror (released blocks only, shipped in the `.vsix`). See `/vscode-p5-development` and `rules/versioning.md`.
+- At project finalization (last batch of Phase 5): generate a `CLAUDE.md` at the generated project root - origin (framework + version), business context, framework deviations - produce the `.vsix` (`vsce package`), and seed the changelog: the canonical `docs/release/CHANGELOG.md` (Keep a Changelog, English, initial `1.0.0`) plus its derived root `CHANGELOG.md` mirror (released blocks only, shipped in the `.vsix`), and write the delivery baseline session `docs/sessions/SESSION_[app_name]_S0.md` (`/vscode-save-session` template, `N = 0`, overwritten if Phase 5 is replayed). See `/vscode-p5-development` and `rules/versioning.md`.
 - Maintenance changes (`add-feature`/`fix-issue`/`refactor-code`) append an entry under `## [Unreleased]` in the canonical `docs/release/CHANGELOG.md`; the version (`package.json` `"version"`) and the root `CHANGELOG.md` mirror are updated only by `/vscode-release`. Never bump the version silently. See `rules/versioning.md`.
 - After resolving an anomaly, offer: "Do you want to remember this point? `/vscode-save-memory`"
 - NEVER read and write the generator's own `.claude/settings.json` — ONLY read and write in `settings.local.json`. (The `.claude/settings.json` written into a delivered project in Phase 5 is a legitimate deliverable; this rule concerns this framework's own file, not the generated one.)

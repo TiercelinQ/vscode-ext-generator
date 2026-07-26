@@ -140,6 +140,8 @@ Fichiers écrits directement sur le disque. Annonce `Lot N/[total] — [contenu]
 
 La reprise est gérée par `/vscode-app` (option 2, ou un bloc SESSION collé directement dans le message — reprise directe sans menu) : lecture complète du fichier SESSION, réponse `Resuming [APP_NAME] — [phase suivante] | Batch [X/total] | Open points: …`, puis enchaînement immédiat sans re-poser les questions résolues.
 
+En fin de Phase 5, le générateur écrit automatiquement `docs/sessions/SESSION_[NomExtension]_S0.md` : la session de référence de la livraison (écrasée si la Phase 5 est rejouée). Les `/vscode-save-session` manuels sont numérotés à partir de S1.
+
 ---
 
 ## Travailler sur un projet livré
