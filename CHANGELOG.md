@@ -4,6 +4,19 @@ All notable changes to this generator are documented in this file.
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 (This is the changelog of the **generator** itself, distinct from the `docs/release/CHANGELOG.md` / root `CHANGELOG.md` of each generated extension.)
 
+## [1.5.0] - 2026-08-01
+### Added
+- Phase 5 offers `/vscode-save-session` between batches when the session is running long or the context is heavily loaded (safety net before saturation; automatic chaining stays the default).
+- Phase 2 Step 1 separates `displayName` (may keep spaces — the Marketplace display name) from the space-free technical identifier (`name`, session filename), with normalization of a free-typed name.
+- `/vscode-release` now updates the README title line (`# [APP_NAME] — v[NEW]`) as a targeted edit of that single line; the version-bump trigger is documented in `rules/readme.md`.
+- The extension-template `.claude/settings.json` deny anchoring is documented as deliberate in Phase 5 ("Deny anchoring" note — no deny may match `docs/release/CHANGELOG.md`).
+
+### Changed
+- The CALIBRATION closing paragraph is harmonized across the 5 generators ("add files and push the size up", no dedicated batch).
+
+### Fixed
+- The Phase 5 batch-split line says "frozen in Phase 2" (was "Phase 1"), matching the canonical calibration freeze.
+
 ## [1.4.0] - 2026-07-26
 ### Added
 - Phase 5 now writes the delivery baseline session file `docs/sessions/SESSION_<Ext>_S0.md` automatically at the end of the last batch (`/vscode-save-session` template, `N = 0`, overwritten if Phase 5 is replayed). Manual `/vscode-save-session` saves keep numbering from `S1`. The delivery summary links it; `.vscodeignore` already keeps `docs/**` out of the `.vsix`.

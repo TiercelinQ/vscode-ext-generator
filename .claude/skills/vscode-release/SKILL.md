@@ -56,11 +56,12 @@ On confirmation, using the chosen version `NEW` and the session date `<YYYY-MM-D
 1. In the canonical `docs/release/CHANGELOG.md`: rename `## [Unreleased]` content into a new block `## [NEW] - <YYYY-MM-DD>` (keep the category order Added/Changed/Fixed/Removed/Security), and insert a fresh empty `## [Unreleased]` above it.
 2. Bump the **canonical** version: `package.json` `"version"` → `NEW`.
 3. **Regenerate the root `CHANGELOG.md` mirror** from the canonical: copy every released block (in order, newest first), **omitting** the `## [Unreleased]` section, under the mirror preamble (`# Change Log` + the Keep a Changelog / SemVer line). The mirror's top block must be the `NEW` block. This is the file that ships in the `.vsix` (`docs/**` is excluded — `@rules/manifest.md`).
-4. Do **not** touch `docs/specs/`, the README, or the extension `CLAUDE.md` origin (that records the framework version, not the extension version).
+4. Update the README **title line** to the new version: `# [APP_NAME] — v[NEW]` — a **targeted edit** of that single line, never a full README regeneration (`@rules/readme.md §When to refresh`).
+5. Do **not** touch `docs/specs/`, the rest of the README (only the title line above moves), or the extension `CLAUDE.md` origin (that records the framework version, not the extension version).
 
 ## Step 5 — Verify + hand off
 
-1. Apply `@rules/verification.md` version consistency: the top released version of `docs/release/CHANGELOG.md` == `package.json` `"version"` == the top block of the root `CHANGELOG.md` mirror; `[Unreleased]` reset empty in the canonical, absent from the mirror.
+1. Apply `@rules/verification.md` version consistency: the top released version of `docs/release/CHANGELOG.md` == `package.json` `"version"` == the top block of the root `CHANGELOG.md` mirror; the README title line shows `v[NEW]`; `[Unreleased]` reset empty in the canonical, absent from the mirror.
 2. Output the cut version block verbatim in a fenced markdown snippet — ready to paste into a marketplace release note.
 3. Remind the user that packaging, committing, tagging, and publishing are theirs to do (this skill never runs them): e.g. `npm run package` (`.vsix`), then `git commit -am "release: vNEW"` + `git tag vNEW`, then optionally `vsce publish` / `ovsx publish`.
 

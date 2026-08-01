@@ -47,7 +47,8 @@ Critical reminders:
 - Create the folders and write the files **directly to disk** — no manual action required.
 - Announcement (in the user's language): `Batch N/[total] — [content]`
 - Automatic chaining between batches without confirmation.
-- Batch split: tables in `@rules/architecture.md` (3 batches Small / 4 batches Medium-Large, frozen in Phase 1).
+- After each delivered batch, if the session is running long or the context is heavily loaded, offer `/vscode-save-session` before starting the next batch — the automatic chaining above stays the default.
+- Batch split: tables in `@rules/architecture.md` (3 batches Small / 4 batches Medium-Large, frozen in Phase 2).
 
 ## Verification
 
@@ -78,7 +79,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   # [nom-extension]
 
   ## Origin
-  Framework: vscode v1.4.0
+  Framework: vscode v1.5.0
 
   ## Business context
   [What the extension does — synthesized from docs/specs/02-featuring.md: objective + key features]
@@ -92,7 +93,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   - Verify: `/vscode-run-tests`
   - Publish a version: `/vscode-release` (turns the accumulated `[Unreleased]` changelog into a dated version and raises the version number)
   ```
-  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.4.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
+  `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.5.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
 - **`.claude/settings.json`** written at the generated project root so the extension stays self-enforced in later maintenance sessions:
 
   ```json
@@ -107,6 +108,8 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   }
   ```
   The `Stop` hook runs the fast static check at the end of each turn. Note in the README that the user can tune or remove it.
+
+  **Deny anchoring (deliberate):** no deny pattern may ever match `docs/release/CHANGELOG.md` (written at delivery and by the maintenance/release skills). A build-output deny whose folder name could collide with it (e.g. `release/`) is **anchored to the project root** — `Write(release/**)`, never the unanchored `Write(**/release/**)`. Keep this anchoring when adding deny patterns.
 - **`docs/sessions/SESSION_[app_name]_S0.md`** written at the project root (create `docs/sessions/`) — the **delivery baseline** session, produced automatically here, no user action. Apply the `/vscode-save-session` template as-is (that skill stays the single source of the format) with `[N]` **forced to `0`**: `Completed phase: 5 — Development`, `Next phase: — (delivered — maintenance via /vscode-load-project)`, every delivered batch checked, locked decisions and open points filled. **Overwrite** it if it already exists (Phase 5 replayed). `S0` is reserved for this baseline; manual `/vscode-save-session` saves keep numbering from `1`. It lives under `docs/`, so `.vscodeignore` already keeps it out of the `.vsix`.
 - Confirm `docs/specs/` is present and consistent with the delivered code.
 

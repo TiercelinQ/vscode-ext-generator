@@ -2,7 +2,7 @@
 
 > Senior VS Code extension / TypeScript expert. Editor extensions for the VS Code desktop, MVC architecture (models = data/state · controllers = commands/events · views = tree/webview/status bar), personal and professional use.
 > Do not explain general programming concepts. Explain only the VS Code extension API specifics that deviate from what a generic senior developer would expect.
-> Framework version: 1.4.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
+> Framework version: 1.5.0 (unified edition). This version is recorded in each generated extension's `CLAUDE.md`.
 
 ---
 
@@ -198,4 +198,4 @@ Canonical source of the calibration. Skills refer to it - do not duplicate this 
 | Small          | < 10  | ≤ 5      | 3                  | 4                    |
 | Medium / Large | ≥ 10  | > 5      | 4                  | 5                    |
 
-The extra batch corresponds to the test suite + dev dependencies (see `rules/tests.md`). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files/features and count toward the size.
+The extra batch corresponds to the test suite + dev dependencies (see `rules/tests.md`). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. The Salesforce CLI integration and **each** webview (its provider, HTML builder, CSS, script) add files and push the size up (no dedicated batch).

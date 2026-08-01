@@ -27,6 +27,8 @@ Read `docs/specs/01-scoping.md` first (objective + locked parameters). Work in t
 
 Claude **proposes** 2-4 candidate names (`displayName`) derived from the objective, then lets the user decide. **Do not mark a recommended option and do not auto-select** — the name is the user's call (a deliberate local exception to the "always recommend" rule in `CLAUDE.md`, limited to this step). Offer the candidates with `AskUserQuestion`; the built-in **Other** option carries a custom name as free-form text. Block until the user picks a candidate or provides their own. The resolved name feeds the sheet, the spec, and `[APP_NAME]` / `displayName` downstream (and informs the `name`/`publisher` id pattern).
 
+**Identifier vs display name — no spaces in the identifier.** `displayName` may keep spaces (it is the display name shown on the Marketplace). The **technical identifier** (`name`, and the `[APP_NAME]` used downstream) is **space-free**: propose space-free candidates for it (kebab-case), and **normalize** a free-typed name (spaces removed or replaced with a hyphen) — the `SESSION_[app_name]_S[N].md` filename and the manifest `name` id both assume it. When display name and identifier differ, record both in the sheet and the spec.
+
 ### Step 2 — Feature elicitation (iterative)
 
 From the objective, propose a base set of candidate features. If the Salesforce CLI integration is on, the starter Org Manager (list/add/remove/reconnect/set-default orgs) is a baseline feature — present it as already included. Then loop, asking as free-form text: "Other features to add? (free description, or 'done')". Maintain the running candidate list; stop when the user signals no more ideas.
