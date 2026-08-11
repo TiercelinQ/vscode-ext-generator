@@ -5,11 +5,13 @@
 Conditional — enabled if Phase 1 tests = `Yes`.
 
 If enabled:
+
 - Test setup mandatory in the architectural contract (Phase 4).
 - Dedicated extra batch in Phase 5 (Small: 4 batches · Medium/Large: 5 batches).
 - Dev dependencies added (`@vscode/test-cli`, `@vscode/test-electron`, `mocha`, `@types/mocha`).
 
 If disabled:
+
 - No test files, no extra batch. Batch count unchanged (Small: 3 · Medium/Large: 4).
 
 ---
@@ -32,7 +34,7 @@ export default defineConfig({ files: "out/**/*.test.js" });
 >
 > The integration tests load the **real** extension through the host, so its `main` (`dist/extension.js`) must exist **and** the tests must be compiled to `out/`. Make `pretest` do both: `"pretest": "npm run build && tsc -p ./"` (esbuild produces `dist/`, `tsc` emits the `out/` test build). Omitting the build → the activation test fails with `Cannot find module dist/extension.js`.
 >
-> **Windows caveat**: `@vscode/test-electron` mishandles **spaces in the absolute project path** (it splits the dev path at the space → `Cannot find module 'd:\…'`). Run `npm test` from a path without spaces, or document it. A `Error mutex already exists` line when another VS Code instance of the same version is open is non-fatal noise.
+> **Windows caveat**: `@vscode/test-electron` mishandles **spaces in the absolute project path** (it splits the dev path at the space → `Cannot find module 'e:\…'`). Run `npm test` from a path without spaces, or document it. A `Error mutex already exists` line when another VS Code instance of the same version is open is non-fatal noise.
 
 > **Mocha globals under TypeScript 6** (mandatory): ship `src/test/global.d.ts` with a single line — `/// <reference types="mocha" />`. Since TypeScript 6, `tsc` no longer auto-includes `@types/mocha`'s global TDD declarations, so every test file fails typecheck with `TS2593 Cannot find name 'suite' / 'test'` without it. Keep the reference in this dedicated `.d.ts`; do **not** add `mocha` to a tsconfig `types` array — that would break a no-tests project (where `mocha` is not installed → `Cannot find type definition file for 'mocha'`). The `.d.ts` exists only in the tests batch. See `@rules/config.md` (test stack also requires **Node ≥ 22**).
 
@@ -40,12 +42,12 @@ export default defineConfig({ files: "out/**/*.test.js" });
 
 ## What to test, per layer
 
-| Layer                 | Target              | What to test                                                        |
-| --------------------- | ------------------- | ------------------------------------------------------------------- |
-| `src/models/`         | Business logic      | public methods, named errors, `Result` shapes, edge cases (external calls mocked) |
-| `src/controllers/`    | Wiring + validation | invalid input rejected; a command registers and dispatches; failure → notification path |
-| `src/views/`          | Smoke               | a `TreeDataProvider` returns the expected children for a known model state |
-| Activation            | Integration         | `extension.activate` runs; contributed commands are registered (`vscode.commands.getCommands`) |
+| Layer              | Target              | What to test                                                                                   |
+| ------------------ | ------------------- | ---------------------------------------------------------------------------------------------- |
+| `src/models/`      | Business logic      | public methods, named errors, `Result` shapes, edge cases (external calls mocked)              |
+| `src/controllers/` | Wiring + validation | invalid input rejected; a command registers and dispatches; failure → notification path        |
+| `src/views/`       | Smoke               | a `TreeDataProvider` returns the expected children for a known model state                     |
+| Activation         | Integration         | `extension.activate` runs; contributed commands are registered (`vscode.commands.getCommands`) |
 
 ---
 
@@ -70,14 +72,14 @@ suite("activation", () => {
   test("s'active et enregistre les commandes contribuées", async () => {
     const ext = vscode.extensions.getExtension("<publisher>.<name>");
     assert.ok(ext, "extension introuvable");
-    await ext.activate();   // commands are registered in activate() — activate before asserting
+    await ext.activate(); // commands are registered in activate() — activate before asserting
     const all = await vscode.commands.getCommands(true);
     assert.ok(all.includes(CMD.ENTITY_REFRESH));
   });
 });
 ```
 
-> The extension id is `<publisher>.<name>` from `package.json`. Activating first is required: contributed commands are only *registered* once `activate()` runs.
+> The extension id is `<publisher>.<name>` from `package.json`. Activating first is required: contributed commands are only _registered_ once `activate()` runs.
 
 ## Model test pattern (mandatory)
 
@@ -87,7 +89,12 @@ import { OrgModel } from "../models/org.model";
 
 suite("org.model", () => {
   test("retourne une erreur quand sf est absent", async () => {
-    const model = new OrgModel({ run: async () => ({ ok: false, error: { kind: "error", message: "sf introuvable" } }) } as any);
+    const model = new OrgModel({
+      run: async () => ({
+        ok: false,
+        error: { kind: "error", message: "sf introuvable" },
+      }),
+    } as any);
     const res = await model.list();
     assert.strictEqual(res.ok, false);
   });
