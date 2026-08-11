@@ -7,12 +7,15 @@ model: sonnet
 # /vscode-p5-development — Batch development
 
 ## Role
+
 Senior VS Code extension developer — build the contracted extension to a clean, buildable, packageable state.
 
 ## Goal
+
 Deliver the extension in batches, each one typecheck/lint-clean and contract-compliant, ending with install instructions and a `.vsix`.
 
 ## Deliverable
+
 The full project source on disk + `README.md` + verified build + `.vsix`.
 
 ---
@@ -24,6 +27,7 @@ The full project source on disk + `README.md` + verified build + `.vsix`.
 At start, read and fully apply: `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/i18n.md` (if i18n) · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if sf) · `@rules/tests.md` (if tests) · `@rules/versioning.md` · `@rules/verification.md` (not auto-imported). **If a webview is in scope, read `webview-ui.md`** before producing any webview UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
 
 Critical reminders:
+
 - ESLint clean · Prettier · TypeScript strict · TSDoc on classes and public API.
 - Error handling on all fallible operations; never let a command handler throw.
 - Every disposable pushed into `context.subscriptions`.
@@ -61,7 +65,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 - **Changelog + version (canonical + root mirror)** per `@rules/versioning.md` — **in English**, Keep a Changelog shape. Write **two** files:
   - **`docs/release/CHANGELOG.md`** — the **canonical** source of truth (create `docs/release/`): the preamble, an empty `## [Unreleased]`, and the initial `## [1.0.0] - <YYYY-MM-DD>` block with `### Added` / `- Initial release.`. Later releases are cut with `/vscode-release`.
   - **`CHANGELOG.md`** at the extension root — the **derived mirror** required by vsce/marketplace: the released blocks only (no `## [Unreleased]`), regenerated from the canonical. At initial delivery it holds the single `## [1.0.0] - <YYYY-MM-DD>` block. `.vscodeignore` excludes `docs/**`, so this root file is what SHIPS in the `.vsix` and renders on the marketplace page.
-  The `1.0.0` in both files matches the extension version in `package.json` `"version"`.
+    The `1.0.0` in both files matches the extension version in `package.json` `"version"`.
 - Install and run instructions:
   ```
   npm install
@@ -79,37 +83,66 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   # [nom-extension]
 
   ## Origin
+
   Framework: vscode v1.5.0
 
   ## Business context
+
   [What the extension does — synthesized from docs/specs/02-featuring.md: objective + key features]
 
   ## Deviations from the framework
+
   - None
 
   ## Maintenance
+
   - Load the project first: `/vscode-load-project`
   - Change it: `/vscode-add-feature` · `/vscode-fix-issue` · `/vscode-refactor-code` (each records the change under `[Unreleased]` in `docs/release/CHANGELOG.md`; the version does not move)
   - Verify: `/vscode-run-tests`
   - Publish a version: `/vscode-release` (turns the accumulated `[Unreleased]` changelog into a dated version and raises the version number)
   ```
+
   `[nom-extension]` = `displayName`. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 1.5.0) — not the extension's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
+
 - **`.claude/settings.json`** written at the generated project root so the extension stays self-enforced in later maintenance sessions:
 
   ```json
   {
     "permissions": {
-      "allow": ["Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Read", "Write", "Edit"],
-      "deny": ["Read(**/.env)", "Read(**/.env.*)", "Read(**/secrets/**)", "Write(**/.env)", "Write(**/.env.*)", "Write(**/secrets/**)", "Edit(**/.env)", "Edit(**/.env.*)", "Edit(**/secrets/**)", "Write(**/node_modules/**)", "Write(**/dist/**)", "Write(**/out/**)", "Write(**/*.vsix)"]
+      "allow": [
+        "Bash(npm:*)",
+        "Bash(npx:*)",
+        "Bash(node:*)",
+        "Read",
+        "Write",
+        "Edit"
+      ],
+      "deny": [
+        "Read(**/.env)",
+        "Read(**/.env.*)",
+        "Read(**/secrets/**)",
+        "Write(**/.env)",
+        "Write(**/.env.*)",
+        "Write(**/secrets/**)",
+        "Edit(**/.env)",
+        "Edit(**/.env.*)",
+        "Edit(**/secrets/**)",
+        "Write(**/node_modules/**)",
+        "Write(**/dist/**)",
+        "Write(**/out/**)",
+        "Write(**/*.vsix)"
+      ]
     },
     "hooks": {
       "Stop": [{ "hooks": [{ "type": "command", "command": "npm run lint" }] }]
     }
   }
   ```
+
   The `Stop` hook runs the fast static check at the end of each turn. Note in the README that the user can tune or remove it.
 
   **Deny anchoring (deliberate):** no deny pattern may ever match `docs/release/CHANGELOG.md` (written at delivery and by the maintenance/release skills). A build-output deny whose folder name could collide with it (e.g. `release/`) is **anchored to the project root** — `Write(release/**)`, never the unanchored `Write(**/release/**)`. Keep this anchoring when adding deny patterns.
+
 - **`docs/sessions/SESSION_[app_name]_S0.md`** written at the project root (create `docs/sessions/`) — the **delivery baseline** session, produced automatically here, no user action. Apply the `/vscode-save-session` template as-is (that skill stays the single source of the format) with `[N]` **forced to `0`**: `Completed phase: 5 — Development`, `Next phase: — (delivered — maintenance via /vscode-load-project)`, every delivered batch checked, locked decisions and open points filled. **Overwrite** it if it already exists (Phase 5 replayed). `S0` is reserved for this baseline; manual `/vscode-save-session` saves keep numbering from `1`. It lives under `docs/`, so `.vscodeignore` already keeps it out of the `.vsix`.
 - Confirm `docs/specs/` is present and consistent with the delivered code.
 
@@ -119,7 +152,7 @@ Add a final dedicated batch: announce `Batch [final]/[total] — src/test/ + dev
 
 ## Final delivery summary
 
-Once the last batch (plus the test batch if any) is delivered, close Phase 5 with a **delivery summary** in the user's language. **Make every file and the project folder a clickable Markdown link** `[label](path)`, each path pointing to the real on-disk location under the project root (relative to the project root, or absolute if the project root lies outside the current workspace). **Valid link syntax (mandatory)**: a Markdown link destination cannot contain spaces unless wrapped in angle brackets. When the path contains spaces (typical of absolute Windows paths), wrap the destination in `<…>` and use forward slashes, e.g. `[README.md](<D:/Documents/00 Mes Documents/.../my-extension/README.md>)`. Without spaces, a plain relative path is fine. List:
+Once the last batch (plus the test batch if any) is delivered, close Phase 5 with a **delivery summary** in the user's language. **Make every file and the project folder a clickable Markdown link** `[label](path)`, each path pointing to the real on-disk location under the project root (relative to the project root, or absolute if the project root lies outside the current workspace). **Valid link syntax (mandatory)**: a Markdown link destination cannot contain spaces unless wrapped in angle brackets. When the path contains spaces (typical of absolute Windows paths), wrap the destination in `<…>` and use forward slashes, e.g. `[README.md](<E:/Informatique/1-projects/.../my-extension/README.md>)`. Without spaces, a plain relative path is fine. List:
 
 - **Project folder** — the project root (clickable).
 - **README.md** — how to run, stack, tree, contribution points (clickable).
@@ -133,6 +166,7 @@ Once the last batch (plus the test batch if any) is delivered, close Phase 5 wit
   # F5 → Extension Development Host
   npm run package      # → .vsix
   ```
+
   (+ `npm test` if tests enabled. `vsce publish` / `ovsx publish` to distribute — on the user's decision.)
   (+ the `sf` CLI must be installed if the Salesforce integration is on.)
 
