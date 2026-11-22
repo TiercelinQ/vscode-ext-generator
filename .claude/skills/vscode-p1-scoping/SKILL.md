@@ -2,6 +2,7 @@
 name: vscode-p1-scoping
 description: Phase 1 of the VS Code extension generation cycle — scoping in grouped questions (i18n, tests, webview, a conditional Salesforce CLI opt-in shown only when the objective mentions Salesforce, icon), engine floor announcement, calibration announcement, and writing of the scoping spec.
 model: sonnet
+effort: medium
 ---
 
 # /vscode-p1-scoping — Scoping

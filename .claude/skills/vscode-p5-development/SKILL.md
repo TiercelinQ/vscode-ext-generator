@@ -2,6 +2,7 @@
 name: vscode-p5-development
 description: Phase 5 of the VS Code extension generation cycle — development and batch delivery, files written directly to disk, executable verification, final README, and .vsix packaging.
 model: sonnet
+effort: medium
 ---
 
 # /vscode-p5-development — Batch development

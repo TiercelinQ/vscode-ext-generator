@@ -2,6 +2,7 @@
 name: vscode-add-feature
 description: Add a feature, command, view, entity, or change to a VS Code extension already delivered by this framework. Use when the user asks to add or modify functionality on an existing project, respecting the locked architectural contract and the security rules.
 model: sonnet
+effort: high
 ---
 
 # /vscode-add-feature — Add a feature to a delivered extension

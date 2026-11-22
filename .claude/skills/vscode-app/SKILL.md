@@ -2,6 +2,7 @@
 name: vscode-app
 description: Start menu of the VS Code extension generator — new extension, resume an existing session, load a delivered project, or maintain one. Invoke at the beginning of a conversation or at any time via /vscode-app.
 model: haiku
+effort: low
 ---
 
 # /vscode-app — Start / resume / maintenance menu
