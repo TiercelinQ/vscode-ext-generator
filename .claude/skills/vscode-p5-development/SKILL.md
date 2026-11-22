@@ -85,7 +85,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 
   ## Origin
 
-  Framework: vscode v1.5.0
+  Framework: vscode v2.0.0
 
   ## Business context
 

@@ -4,6 +4,18 @@ All notable changes to this generator are documented in this file.
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 (This is the changelog of the **generator** itself, distinct from the `docs/release/CHANGELOG.md` / root `CHANGELOG.md` of each generated extension.)
 
+## [2.0.0] - 2026-11-22
+### Added
+- `.claude/scripts/` with five dependency-free Node scripts: `bump-release.mjs` (also regenerates the root `CHANGELOG.md` mirror), `check-ids.mjs` (`constants.ts`, `contributes`, handlers and `when` clauses), `run-verification.mjs`, `static-checks.mjs` and `search-sf-catalog.mjs`. Tested on fixtures only, not on a generated project. The commands that could call them are unchanged.
+
+### Changed
+- **Major version.** Every skill now carries an `effort` field and a rebalanced `model` (`opus` for `p2-featuring`, `p3-surfaces`, `p4-architect`, `fix-issue` and `refactor-code`, `haiku` for `release` and `run-tests`), which changes the cost profile of every command. Values come from the 2026-11-22 cost and quality audit and the Claude Code skill frontmatter documentation.
+- `vscode-show-state` names its sources (the latest `docs/sessions/SESSION_*_S*.md`, then the canonical changelog `docs/release/CHANGELOG.md`) instead of risking an invented state.
+- `vscode-p5-development` loads `@rules/readme.md` and writes the delivered `README.md` in English (it is also the Marketplace page); `vscode-fix-issue` checks that `sf-cli.ts` uses `cross-spawn` with an args array.
+- `vscode-save-memory` asks the memory category with `AskUserQuestion` instead of a typed A-D choice.
+- `vscode-app` maintenance menu routes `/vscode-generate-readme`.
+- `rules/verification.md` lists the skills that load it (all 7 of them, not 4).
+
 ## [1.5.0] - 2026-08-01
 ### Added
 - Phase 5 offers `/vscode-save-session` between batches when the session is running long or the context is heavily loaded (safety net before saturation; automatic chaining stays the default).
