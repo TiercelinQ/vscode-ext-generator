@@ -1,7 +1,8 @@
 ---
 name: vscode-p3-surfaces
 description: Phase 3 of the VS Code extension generation cycle — surfaces & UX, mapping the validated features onto VS Code contribution points (commands, views, status bar, menus, webview), validated synthesis written to the spec before Phase 4.
-model: sonnet
+model: opus
+effort: medium
 ---
 
 # /vscode-p3-surfaces — Surfaces & UX

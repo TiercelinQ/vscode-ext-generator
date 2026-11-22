@@ -1,7 +1,8 @@
 ---
 name: vscode-p4-architect
 description: Phase 4 of the VS Code extension generation cycle — complete architectural contract (tree, role of each file, contribution points, manifest map, state map, webview/sf surfaces), written to the contract spec and locked after validation.
-model: sonnet
+model: opus
+effort: high
 ---
 
 # /vscode-p4-architect — Architectural contract

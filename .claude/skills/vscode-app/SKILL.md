@@ -2,6 +2,7 @@
 name: vscode-app
 description: Start menu of the VS Code extension generator — new extension, resume an existing session, load a delivered project, or maintain one. Invoke at the beginning of a conversation or at any time via /vscode-app.
 model: haiku
+effort: low
 ---
 
 # /vscode-app — Start / resume / maintenance menu
@@ -44,6 +45,7 @@ Project root to maintain? (folder path, e.g. C:\projects\MyExtension)
 - add a feature → `/vscode-add-feature`
 - fix a bug → `/vscode-fix-issue`
 - restructure existing code → `/vscode-refactor-code`
+- refresh the README → `/vscode-generate-readme`
 - cut a release / bump the version → `/vscode-release`
 - verify the build / run checks → `/vscode-run-tests`
 

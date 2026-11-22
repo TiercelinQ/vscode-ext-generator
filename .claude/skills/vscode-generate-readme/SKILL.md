@@ -2,6 +2,7 @@
 name: vscode-generate-readme
 description: Analyze the specs and source of an existing VS Code extension project and generate its README.md (objective, features, stack, tree, contribution points, prerequisites, installation). Invoke from the target project root.
 model: sonnet
+effort: low
 ---
 
 # /vscode-generate-readme — Generate the README.md
