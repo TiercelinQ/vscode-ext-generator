@@ -40,7 +40,7 @@ Read the actual error before touching code. Classify, then act in this order:
 
 ### 5. State / sf issue
 - State not persisted/read: check it goes through the wrapper (`storage.ts`/`secrets.ts`/`configuration.ts`) with a key from `constants.ts`. Secret in the wrong store → move to `SecretStorage`.
-- sf call fails: check `sf-cli.ts` uses a `spawn` args array, the `sf` binary is detected, and the envelope is parsed defensively (`@rules/sf-cli.md`). If a wrong command/flag is suspected, verify it against the matching `sf-cli-reference/` section file.
+- sf call fails: check `sf-cli.ts` uses `cross-spawn` with an args array, the `sf` binary is detected, and the envelope is parsed defensively (`@rules/sf-cli.md`). If a wrong command/flag is suspected, verify it against the matching `sf-cli-reference/` section file.
 
 ### 6. Security gap (`@rules/security.md`)
 - Webview without CSP+nonce, remote resource, unvalidated message/arg, secret outside `SecretStorage`, `shell:true`/concatenated `sf` command. These are never "acceptable for now" — fix to the rule.

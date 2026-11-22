@@ -1,6 +1,6 @@
 # Verification rules — single source of truth
 
-> Centralized, reusable verification for the whole framework. Referenced by `/vscode-p5-development`, `/vscode-add-feature`, `/vscode-fix-issue`, and `/vscode-run-tests` — never duplicated in those skills.
+> Centralized, reusable verification for the whole framework. Referenced by `/vscode-p5-development`, `/vscode-add-feature`, `/vscode-fix-issue`, `/vscode-refactor-code`, `/vscode-release`, `/vscode-load-project`, and `/vscode-run-tests` — never duplicated in those skills.
 > Two parts: **executable verification** (run real commands) and **static integrity** (read the code). Run silently; report only on a discrepancy.
 
 ---

@@ -44,6 +44,7 @@ Project root to maintain? (folder path, e.g. C:\projects\MyExtension)
 - add a feature → `/vscode-add-feature`
 - fix a bug → `/vscode-fix-issue`
 - restructure existing code → `/vscode-refactor-code`
+- refresh the README → `/vscode-generate-readme`
 - cut a release / bump the version → `/vscode-release`
 - verify the build / run checks → `/vscode-run-tests`
 

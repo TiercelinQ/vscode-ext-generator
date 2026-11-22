@@ -24,7 +24,7 @@ The full project source on disk + `README.md` + verified build + `.vsix`.
 
 ## Code rules
 
-At start, read and fully apply: `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/i18n.md` (if i18n) · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if sf) · `@rules/tests.md` (if tests) · `@rules/versioning.md` · `@rules/verification.md` (not auto-imported). **If a webview is in scope, read `webview-ui.md`** before producing any webview UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
+At start, read and fully apply: `@rules/architecture.md` · `@rules/manifest.md` · `@rules/state.md` · `@rules/errors.md` · `@rules/security.md` · `@rules/config.md` · `@rules/i18n.md` (if i18n) · `@rules/webview.md` (if webview) · `@rules/sf-cli.md` (if sf) · `@rules/tests.md` (if tests) · `@rules/versioning.md` · `@rules/readme.md` · `@rules/verification.md` (not auto-imported). **If a webview is in scope, read `webview-ui.md`** before producing any webview UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
 
 Critical reminders:
 
@@ -76,7 +76,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   npm run package    # vsce package → .vsix
   ```
 - **`.vsix` packaging**: run `npm run package` (`vsce package`) to produce the `.vsix` at the project root. Document the publication commands without imposing a target: `vsce publish` (VS Code Marketplace, needs a publisher + PAT) and `ovsx publish` (Open VSX). Publication itself is the user's call — never auto-published.
-- `README.md` written automatically at the project root: objective, features, stack, tree, contribution points (commands/views/settings/keybindings), prerequisites (the `sf` CLI + optional Salesforce pack recommendation if the integration is on), installation, run (F5), build, package.
+- `README.md` written automatically at the project root, in English (`@rules/readme.md`): objective, features, stack, tree, contribution points (commands/views/settings/keybindings), prerequisites (the `sf` CLI + optional Salesforce pack recommendation if the integration is on), installation, run (F5), build, package.
 - **`CLAUDE.md`** written at the generated project root (in the user's language), recording the extension's identity for future sessions:
 
   ```markdown
